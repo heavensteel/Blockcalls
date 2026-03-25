@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Unwanted Call Blocker</string>
+    
+    <!-- Main Activity -->
+    <string name="main_title">Unwanted Call Blocker</string>
+    <string name="no_blocked_numbers">No blocking rules yet</string>
+    <string name="add_pattern_hint">Tap + to add a rule</string>
+    <string name="add_pattern">Add Rule</string>
+    <string name="blocked_calls_log">Blocked Calls</string>
+    <string name="settings">Settings</string>
+    
+    <!-- Add Pattern Dialog -->
+    <string name="dialog_add_pattern_title">Add Blocking Rule</string>
+    <string name="dialog_edit_pattern_title">Edit Blocking Rule</string>
+    <string name="select_country">Select Country to Block</string>
+    <string name="select_country_to_block">Select Country</string>
+    <string name="country_code_hint">+90</string>
+    <string name="pattern_hint">0850*</string>
+    <string name="pattern_help">Tip: * matches any digits. Country code is optional.\n• +90 | 0850* → blocks 0850 starting numbers from Turkey\n• +90 | * → blocks ALL Turkey (+90) calls\n• +44 | * → blocks ALL UK calls\n• (empty) | *0850* → blocks any number containing 0850</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="error_empty_pattern">Pattern cannot be empty</string>
+    <string name="error_invalid_pattern">Invalid pattern. Use digits and * only</string>
+    
+    <!-- Blocked Calls Activity -->
+    <string name="no_blocked_calls">No blocked calls yet</string>
+    <string name="no_blocked_calls_hint">Blocked calls will appear here</string>
+    <string name="matched_with">Matched: %1$s</string>
+    <string name="clear_log">Clear Log</string>
+    <string name="confirm_clear_log">Are you sure you want to clear all blocked call logs?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    
+    <!-- Blocked Number Item -->
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="pattern_label">Pattern:</string>
+    <string name="added_label">Added:</string>
+    
+    <!-- Blocked Call Item -->
+    <string name="blocked_number_label">Number:</string>
+    <string name="matched_pattern_label">Matched:</string>
+    <string name="time_label">Time:</string>
+    
+    <!-- Permissions -->
+    <string name="permission_required">Permissions Required</string>
+    <string name="permission_message">This app needs phone permissions to block calls. Please grant all permissions.</string>
+    <string name="grant_permissions">Grant Permissions</string>
+    <string name="call_screening_required">Call Screening Required</string>
+    <string name="call_screening_message">To block calls, this app needs to be set as your Call Screening app. Please enable it in the next screen.</string>
+    <string name="enable_call_screening">Enable Call Screening</string>
+    <string name="permission_denied">Permission denied. The app cannot block calls without permissions.</string>
+    
+    <!-- Swipe Actions -->
+    <string name="swipe_to_delete">Swipe to delete</string>
+    <string name="undo">Undo</string>
+    <string name="deleted">Deleted</string>
+    
+    <!-- Rule Toggle -->
+    <string name="rule_enabled">Rule enabled</string>
+    <string name="rule_disabled">Rule disabled</string>
+    
+    <!-- Bottom Navigation Tabs -->
+    <string name="tab_rules">Rules</string>
+    <string name="tab_blocked_calls">Blocked Calls</string>
+
+    <!-- Context Menu / Actions -->
+    <string name="pattern_added">Rule added</string>
+    <string name="pattern_updated">Rule updated</string>
+    <string name="pattern_deleted">Rule deleted</string>
+    <string name="delete_pattern_title">Delete Rule</string>
+    <string name="delete_pattern_message">Are you sure you want to delete this rule?</string>
+    
+    <!-- Call Screening Toast Messages -->
+    <string name="call_screening_active">Call blocking active (CallScreening)</string>
+    <string name="call_screening_not_supported">This device does not support CallScreening. Alternative blocking method active.</string>
+    <string name="call_screening_failed">CallScreening could not be activated. Alternative blocking method will be used.</string>
+    
+    <!-- Subscription -->
+    <string name="subscription_title">Premium Subscription</string>
+    <string name="subscription_description">Enjoy unlimited call blocking with Premium</string>
+    <string name="monthly_plan">Monthly Plan</string>
+    <string name="sixmonth_plan">6-Month Plan</string>
+    <string name="yearly_plan">Yearly Plan</string>
+    <string name="month">month</string>
+    <string name="sixmonths">6 months</string>
+    <string name="year">year</string>
+    <string name="best_value">BEST VALUE</string>
+    <string name="save_percent">Save 17%</string>
+    <string name="trial_included">7 days free trial included</string>
+    <string name="subscribe_now">Subscribe Now</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="subscription_footer">Cancel anytime. Auto-renews until cancelled.\nYour subscription supports continued development.</string>
+    <string name="trial_days_remaining">%d days left in your free trial</string>
+    <string name="trial_expired">Trial period has ended. Subscribe to continue blocking calls.</string>
+    <string name="trial_google_managed">🎁 7-day free trial with your first subscription. Managed by Google Play — cannot be bypassed.</string>
+    <string name="premium_icon">Premium</string>
+    <string name="error_loading_products">Could not load subscription options. Please try again.</string>
+    <string name="error_product_not_available">Product not available</string>
+</resources>

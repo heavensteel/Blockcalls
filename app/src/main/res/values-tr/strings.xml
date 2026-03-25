@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">İstenmeyen Arama Engelleyici</string>
+    
+    <!-- Main Activity -->
+    <string name="main_title">İstenmeyen Arama Engelleyici</string>
+    <string name="no_blocked_numbers">Henüz engelleme kuralı yok</string>
+    <string name="add_pattern_hint">Kural eklemek için + butonuna dokunun</string>
+    <string name="add_pattern">Kural Ekle</string>
+    <string name="blocked_calls_log">Engellenen Aramalar</string>
+    <string name="settings">Ayarlar</string>
+    
+    <!-- Add Pattern Dialog -->
+    <string name="dialog_add_pattern_title">Engelleme Kuralı Ekle</string>
+    <string name="dialog_edit_pattern_title">Engelleme Kuralını Düzenle</string>
+    <string name="select_country">Engellenecek Ülkeyi Seçin</string>
+    <string name="select_country_to_block">Ülke Seçin</string>
+    <string name="country_code_hint">+90</string>
+    <string name="pattern_hint">0850*</string>
+    <string name="pattern_help">İpucu: * herhangi bir rakamla eşleşir. Ülke kodu isteğe bağlıdır.\n• +90 | 0850* → Türkiye\'den 0850 ile başlayan numaraları engeller\n• +90 | * → TÜM Türkiye (+90) aramalarını engeller\n• +44 | * → TÜM İngiltere aramalarını engeller\n• (boş) | *0850* → 0850 içeren her numarayı engeller</string>
+    <string name="cancel">İptal</string>
+    <string name="save">Kaydet</string>
+    <string name="error_empty_pattern">Kural boş olamaz</string>
+    <string name="error_invalid_pattern">Geçersiz kural. Sadece rakam ve * kullanın</string>
+    
+    <!-- Blocked Calls Activity -->
+    <string name="no_blocked_calls">Henüz engellenen arama yok</string>
+    <string name="no_blocked_calls_hint">Engellenen aramalar burada görünecek</string>
+    <string name="matched_with">Eşleşen: %1$s</string>
+    <string name="clear_log">Kayıtları Temizle</string>
+    <string name="confirm_clear_log">Tüm engellenen arama kayıtlarını silmek istediğinize emin misiniz?</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+    
+    <!-- Blocked Number Item -->
+    <string name="delete">Sil</string>
+    <string name="edit">Düzenle</string>
+    <string name="pattern_label">Kural:</string>
+    <string name="added_label">Eklenme:</string>
+    
+    <!-- Blocked Call Item -->
+    <string name="blocked_number_label">Numara:</string>
+    <string name="matched_pattern_label">Eşleşen:</string>
+    <string name="time_label">Zaman:</string>
+    
+    <!-- Permissions -->
+    <string name="permission_required">İzinler Gerekli</string>
+    <string name="permission_message">Bu uygulama aramaları engellemek için telefon izinlerine ihtiyaç duyar. Lütfen tüm izinleri verin.</string>
+    <string name="grant_permissions">İzinleri Ver</string>
+    <string name="call_screening_required">Arama Engelleme Gerekli</string>
+    <string name="call_screening_message">Aramaları engellemek için bu uygulamanın Arama Engelleme uygulamanız olarak ayarlanması gerekir. Lütfen bir sonraki ekranda etkinleştirin.</string>
+    <string name="enable_call_screening">Arama Engellemeyi Etkinleştir</string>
+    <string name="permission_denied">İzin reddedildi. Uygulama izinler olmadan aramaları engelleyemez.</string>
+    
+    <!-- Swipe Actions -->
+    <string name="swipe_to_delete">Silmek için kaydırın</string>
+    <string name="undo">Geri Al</string>
+    <string name="deleted">Silindi</string>
+    
+    <!-- Rule Toggle -->
+    <string name="rule_enabled">Kural aktif</string>
+    <string name="rule_disabled">Kural devre dışı</string>
+    
+    <!-- Bottom Navigation Tabs -->
+    <string name="tab_rules">Kurallar</string>
+    <string name="tab_blocked_calls">Engellenen Aramalar</string>
+
+    <!-- Context Menu / Actions -->
+    <string name="pattern_added">Kural eklendi</string>
+    <string name="pattern_updated">Kural güncellendi</string>
+    <string name="pattern_deleted">Kural silindi</string>
+    <string name="delete_pattern_title">Kuralı Sil</string>
+    <string name="delete_pattern_message">Bu kuralı silmek istediğinize emin misiniz?</string>
+    
+    <!-- Call Screening Toast Messages -->
+    <string name="call_screening_active">Arama engelleme aktif (CallScreening)</string>
+    <string name="call_screening_not_supported">Bu cihaz CallScreening desteklemiyor. Alternatif engelleme yöntemi aktif.</string>
+    <string name="call_screening_failed">CallScreening aktif edilemedi. Alternatif engelleme yöntemi kullanılacak.</string>
+    
+    <!-- Subscription -->
+    <string name="subscription_title">Premium Abonelik</string>
+    <string name="subscription_description">Premium ile sınırsız arama engellemenin keyfini çıkarın</string>
+    <string name="monthly_plan">Aylık Plan</string>
+    <string name="sixmonth_plan">6 Aylık Plan</string>
+    <string name="yearly_plan">Yıllık Plan</string>
+    <string name="month">ay</string>
+    <string name="sixmonths">6 ay</string>
+    <string name="year">yıl</string>
+    <string name="best_value">EN AVANTAJLI</string>
+    <string name="save_percent">%17 tasarruf</string>
+    <string name="trial_included">7 gün ücretsiz deneme dahil</string>
+    <string name="subscribe_now">Hemen Abone Ol</string>
+    <string name="subscribe">Abone Ol</string>
+    <string name="subscription_footer">İstediğiniz zaman iptal edebilirsiniz. İptal edilmezse otomatik yenilenir.\nAboneliğiniz sürekli geliştirmeyi destekler.</string>
+    <string name="trial_days_remaining">Ücretsiz denemenizin %d günü kaldı</string>
+    <string name="trial_expired">Deneme süresi doldu. Aramaları engellemeye devam etmek için abone olun.</string>
+    <string name="trial_google_managed">🎁 İlk aboneliğinizde 7 gün ücretsiz. Google Play tarafından yönetilir — silip kurarak atlatılamaz.</string>
+    <string name="premium_icon">Premium</string>
+    <string name="error_loading_products">Abonelik seçenekleri yüklenemedi. Lütfen tekrar deneyin.</string>
+    <string name="error_product_not_available">Ürün mevcut değil</string>
+</resources>
