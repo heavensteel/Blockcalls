@@ -109,7 +109,12 @@ public class PatternMatcher {
         String normalizedPattern = normalizeNumber(pattern);
 
         if (!isWildcard) {
-            return normalizedNumber.equals(normalizedPattern);
+            // Exact match OR prefix match.
+            // Entering "0850" should block "08504301728", "08505001122", etc.
+            // Entering a full number like "08504301728" only matches that exact number
+            // (startsWith is still true for equal-length strings, so no behaviour change).
+            return normalizedNumber.equals(normalizedPattern)
+                    || normalizedNumber.startsWith(normalizedPattern);
         }
 
         // Build regex: each * → \d+ (one or more digits)

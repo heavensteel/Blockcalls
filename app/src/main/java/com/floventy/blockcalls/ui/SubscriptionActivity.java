@@ -61,7 +61,7 @@ public class SubscriptionActivity extends AppCompatActivity {
 
         subscriptionManager = new SubscriptionManager(this);
 
-        // Show subscription info - Google Play manages free trial
+        // Show trial info
         tvTrialInfo.setText(R.string.trial_google_managed);
         tvTrialInfo.setVisibility(View.VISIBLE);
 
@@ -75,7 +75,19 @@ public class SubscriptionActivity extends AppCompatActivity {
             }
         });
 
-        loadProducts();
+        // Content is already visible from XML — connect billing in background to update prices
+        subscriptionManager.connect(new SubscriptionManager.OnBillingReadyListener() {
+            @Override
+            public void onReady() {
+                runOnUiThread(() -> loadProductPrices());
+            }
+
+            @Override
+            public void onFailed(String debugMessage) {
+                // No-op: prices already shown from XML defaults, billing just isn't available
+                Log.w(TAG, "Billing unavailable, using default prices: " + debugMessage);
+            }
+        });
     }
 
     private void initViews() {
@@ -100,38 +112,28 @@ public class SubscriptionActivity extends AppCompatActivity {
         btnYearly.setOnClickListener(v -> launchPurchaseFlow(yearlyProduct));
     }
 
-    private void loadProducts() {
-        progressBar.setVisibility(View.VISIBLE);
-        contentLayout.setVisibility(View.GONE);
-
+    /**
+     * Fetches real prices from Play Console and updates UI.
+     * Content layout is already visible — this just improves price display.
+     */
+    private void loadProductPrices() {
         List<QueryProductDetailsParams.Product> productList = new ArrayList<>();
         productList.add(QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(MONTHLY_SUB)
-                .setProductType(BillingClient.ProductType.SUBS)
-                .build());
+                .setProductId(MONTHLY_SUB).setProductType(BillingClient.ProductType.SUBS).build());
         productList.add(QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(SIXMONTH_SUB)
-                .setProductType(BillingClient.ProductType.SUBS)
-                .build());
+                .setProductId(SIXMONTH_SUB).setProductType(BillingClient.ProductType.SUBS).build());
         productList.add(QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(YEARLY_SUB)
-                .setProductType(BillingClient.ProductType.SUBS)
-                .build());
+                .setProductId(YEARLY_SUB).setProductType(BillingClient.ProductType.SUBS).build());
 
         QueryProductDetailsParams params = QueryProductDetailsParams.newBuilder()
-                .setProductList(productList)
-                .build();
+                .setProductList(productList).build();
 
         subscriptionManager.getBillingClient().queryProductDetailsAsync(params,
                 (billingResult, productDetailsList) -> {
-                    progressBar.setVisibility(View.GONE);
-
                     if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK
                             && productDetailsList != null) {
-
                         for (ProductDetails product : productDetailsList) {
                             String productId = product.getProductId();
-
                             if (MONTHLY_SUB.equals(productId)) {
                                 monthlyProduct = product;
                                 updatePriceUI(tvPriceMonthly, product);
@@ -143,12 +145,9 @@ public class SubscriptionActivity extends AppCompatActivity {
                                 updatePriceUI(tvPriceYearly, product);
                             }
                         }
-
-                        contentLayout.setVisibility(View.VISIBLE);
                     } else {
-                        Toast.makeText(this, R.string.error_loading_products,
-                                Toast.LENGTH_LONG).show();
-                        Log.e(TAG, "Failed to load products: " + billingResult.getDebugMessage());
+                        Log.w(TAG, "Could not fetch prices from Play Console: " + billingResult.getDebugMessage());
+                        // Default prices from XML are still shown — no error toast needed
                     }
                 });
     }

@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment activeFragment;
     private SubscriptionManager subscriptionManager;
     private boolean subscriptionScreenShown = false;
+    private boolean activityResumed = false;  // ensures paywall only shows after UI is visible
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
         // Initialize subscription manager and set up listener ONCE in onCreate
         subscriptionManager = new SubscriptionManager(this);
         subscriptionManager.setStatusListener(isPremium -> {
-            if (!isPremium && !subscriptionScreenShown) {
-                // Subscription expired/cancelled → show paywall
+            if (!isPremium && !subscriptionScreenShown && activityResumed) {
+                // Subscription expired/cancelled → show paywall (only after UI is visible)
                 runOnUiThread(() -> {
                     subscriptionScreenShown = true;
                     Intent intent = new Intent(this, SubscriptionActivity.class);
@@ -101,7 +104,11 @@ public class MainActivity extends AppCompatActivity {
                 // Subscription restored/renewed → reset flag
                 subscriptionScreenShown = false;
             }
+            // Refresh toolbar icon to reflect current premium status
+            runOnUiThread(this::invalidateOptionsMenu);
         });
+        // Connect AFTER listener is set — no race condition possible
+        subscriptionManager.connect();
 
         // Check permissions
         checkPermissions();
@@ -110,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        activityResumed = true;
         // Only refresh billing status - listener in onCreate handles the redirect
         if (subscriptionManager != null) {
             subscriptionManager.refreshSubscriptionStatus();
@@ -138,6 +146,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        // Update title based on current subscription status
+        MenuItem subItem = menu.findItem(R.id.action_subscription);
+        if (subItem != null && subscriptionManager != null) {
+            subItem.setTitle(subscriptionManager.canUseApp()
+                    ? getString(R.string.manage_subscription)
+                    : getString(R.string.action_subscription));
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_subscription) {
+            Intent intent = new Intent(this, SubscriptionActivity.class);
+            startActivityForResult(intent, SUBSCRIPTION_REQUEST_CODE);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

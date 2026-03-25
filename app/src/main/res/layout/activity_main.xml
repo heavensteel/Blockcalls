@@ -18,7 +18,10 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/primary"
             app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
-            app:title="@string/main_title" />
+            app:title="Blockcalls"
+            app:titleTextAppearance="@style/TextAppearance.AppCompat.Small"
+            app:titleTextColor="@android:color/white" />
+
 
     </com.google.android.material.appbar.AppBarLayout>
 

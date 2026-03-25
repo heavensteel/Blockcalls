@@ -98,4 +98,6 @@
     <string name="premium_icon">Premium</string>
     <string name="error_loading_products">Could not load subscription options. Please try again.</string>
     <string name="error_product_not_available">Product not available</string>
+    <string name="action_subscription">⭐ Premium</string>
+    <string name="manage_subscription">✅ Premium Active</string>
 </resources>

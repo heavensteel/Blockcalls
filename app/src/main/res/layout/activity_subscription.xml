@@ -19,8 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="100dp"
-            android:visibility="visible" />
+            android:layout_marginTop="8dp"
+            android:visibility="gone" />
 
         <!-- Main Content -->
         <LinearLayout
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <!-- Premium Icon -->
             <ImageView
@@ -102,7 +102,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="100 TL / @string/month"
+                        android:text="100 TL / Ay"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="@color/primary" />
@@ -171,7 +171,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="500 TL / @string/sixmonths"
+                        android:text="500 TL / 6 Ay"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="@color/accent" />
@@ -236,7 +236,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="900 TL / @string/year"
+                        android:text="900 TL / Yıl"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="@color/success" />

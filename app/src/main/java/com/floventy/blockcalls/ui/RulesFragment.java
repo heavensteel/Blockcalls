@@ -140,8 +140,15 @@ public class RulesFragment extends Fragment {
                 return;
             }
 
-            // Combine: e.g. "+90" + "0850*" = "+900850*" OR just "+90" + "*" = "+90*"
-            String fullPattern = countryCode + pattern;
+            // When a country code is provided, strip the leading "0" from the local
+            // pattern.
+            // e.g. "+90" + "0850*" → "+90850*" (not "+900850*")
+            // In Turkey (and most countries) the local leading 0 is dropped in
+            // international format.
+            String localPattern = (!countryCode.isEmpty() && pattern.startsWith("0"))
+                    ? pattern.substring(1)
+                    : pattern;
+            String fullPattern = countryCode + localPattern;
 
             if (!PatternMatcher.isValidPattern(fullPattern)) {
                 Toast.makeText(requireContext(), R.string.error_invalid_pattern, Toast.LENGTH_SHORT).show();
@@ -204,7 +211,13 @@ public class RulesFragment extends Fragment {
                 return;
             }
 
-            String fullPattern = countryCode + pattern;
+            // When a country code is provided, strip the leading "0" from the local
+            // pattern.
+            // e.g. "+90" + "0850*" → "+90850*" (not "+900850*")
+            String localPattern = (!countryCode.isEmpty() && pattern.startsWith("0"))
+                    ? pattern.substring(1)
+                    : pattern;
+            String fullPattern = countryCode + localPattern;
 
             if (!PatternMatcher.isValidPattern(fullPattern)) {
                 Toast.makeText(requireContext(), R.string.error_invalid_pattern, Toast.LENGTH_SHORT).show();
