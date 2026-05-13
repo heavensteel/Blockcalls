@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Unwanted Call Blocker</string>
-    
+    <string name="app_name">SpamBlock</string>
+
     <!-- Main Activity -->
-    <string name="main_title">Unwanted Call Blocker</string>
+    <string name="main_title">SpamBlock</string>
     <string name="no_blocked_numbers">No blocking rules yet</string>
     <string name="add_pattern_hint">Tap + to add a rule</string>
     <string name="add_pattern">Add Rule</string>
@@ -95,9 +95,32 @@
     <string name="trial_days_remaining">%d days left in your free trial</string>
     <string name="trial_expired">Trial period has ended. Subscribe to continue blocking calls.</string>
     <string name="trial_google_managed">🎁 7-day free trial with your first subscription. Managed by Google Play — cannot be bypassed.</string>
+    <string name="trial_eligible">🎁 Your account is eligible for a 7-day free trial!</string>
+    <string name="trial_not_eligible">Your free trial has already been used. Subscribe to continue.</string>
+    <string name="trial_then_price">7 days free, then %1$s</string>
+    <string name="btn_start_trial">Start 7-Day Free Trial</string>
+    <string name="restore_purchase">Already subscribed? Restore purchase</string>
+    <string name="restoring_purchase">Checking subscription status…</string>
+    <string name="restore_success">Premium activated! Call blocking is now active.</string>
+    <string name="restore_not_found">No active subscription found for this account.</string>
     <string name="premium_icon">Premium</string>
     <string name="error_loading_products">Could not load subscription options. Please try again.</string>
-    <string name="error_product_not_available">Product not available</string>
+    <string name="error_product_not_available">Product not available. Make sure you are using the Play Store version.</string>
     <string name="action_subscription">⭐ Premium</string>
     <string name="manage_subscription">✅ Premium Active</string>
+    <string name="action_logout">Logout</string>
+
+    <!-- Login -->
+    <string name="login_subtitle">Enter your email to verify your subscription and continue</string>
+    <string name="email_hint">Email address</string>
+    <string name="btn_continue">Continue</string>
+    <string name="login_info">Your email is used only to verify your active subscription. We do not store or share it.</string>
+    <string name="error_invalid_email">Please enter a valid email address</string>
+    <string name="error_network_retry">Could not connect. Check your internet connection and try again.</string>
+    <string name="checking_subscription">Verifying subscription for %s…</string>
+    <string name="trial_last_day">Last day of your free trial. Subscribe to continue.</string>
+    <string name="btn_google_signin">Continue with Google</string>
+    <string name="or">or</string>
+    <string name="error_google_failed">Google sign-in failed. Please try again.</string>
+    <string name="error_google_no_email">Could not get email from Google account.</string>
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="trial_days_remaining_plural">
+        <item quantity="one">Ücretsiz deneme: %d gün kaldı</item>
+        <item quantity="other">Ücretsiz deneme: %d gün kaldı</item>
+    </plurals>
+</resources>

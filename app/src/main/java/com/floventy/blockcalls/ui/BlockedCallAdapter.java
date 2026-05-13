@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.text.format.DateFormat;
+
 /**
  * RecyclerView adapter for displaying blocked call logs.
  */
@@ -71,7 +73,10 @@ public class BlockedCallAdapter extends ListAdapter<BlockedCall, BlockedCallAdap
             textMatchedPattern.setText(
                     itemView.getContext().getString(R.string.matched_with, blockedCall.getMatchedPattern()));
 
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy hh:mm a", Locale.getDefault());
+            // Use 24h or 12h based on device locale/user setting
+            boolean is24h = DateFormat.is24HourFormat(itemView.getContext());
+            String timePattern = is24h ? "MMM dd, yyyy HH:mm" : "MMM dd, yyyy hh:mm a";
+            SimpleDateFormat sdf = new SimpleDateFormat(timePattern, Locale.getDefault());
             String dateStr = sdf.format(new Date(blockedCall.getTimestamp()));
             textTimestamp.setText(dateStr);
         }

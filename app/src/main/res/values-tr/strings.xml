@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">İstenmeyen Arama Engelleyici</string>
-    
+    <string name="app_name">SpamBlock</string>
+
     <!-- Main Activity -->
-    <string name="main_title">İstenmeyen Arama Engelleyici</string>
+    <string name="main_title">SpamBlock</string>
     <string name="no_blocked_numbers">Henüz engelleme kuralı yok</string>
     <string name="add_pattern_hint">Kural eklemek için + butonuna dokunun</string>
     <string name="add_pattern">Kural Ekle</string>
@@ -95,7 +95,32 @@
     <string name="trial_days_remaining">Ücretsiz denemenizin %d günü kaldı</string>
     <string name="trial_expired">Deneme süresi doldu. Aramaları engellemeye devam etmek için abone olun.</string>
     <string name="trial_google_managed">🎁 İlk aboneliğinizde 7 gün ücretsiz. Google Play tarafından yönetilir — silip kurarak atlatılamaz.</string>
+    <string name="trial_eligible">🎁 Hesabınız 7 günlük ücretsiz denemeye uygun!</string>
+    <string name="trial_not_eligible">Ücretsiz denemeniz daha önce kullanılmış. Devam etmek için abone olun.</string>
+    <string name="trial_then_price">7 gün ücretsiz, sonra %1$s</string>
+    <string name="btn_start_trial">7 Günlük Ücretsiz Denemeyi Başlat</string>
+    <string name="restore_purchase">Zaten abone misiniz? Satın alımı geri yükle</string>
+    <string name="restoring_purchase">Abonelik kontrol ediliyor…</string>
+    <string name="restore_success">Premium aktif! Arama engelleme devrede.</string>
+    <string name="restore_not_found">Bu hesap için aktif abonelik bulunamadı.</string>
     <string name="premium_icon">Premium</string>
     <string name="error_loading_products">Abonelik seçenekleri yüklenemedi. Lütfen tekrar deneyin.</string>
-    <string name="error_product_not_available">Ürün mevcut değil</string>
+    <string name="error_product_not_available">Ürün mevcut değil. Play Store sürümünü kullandığınızdan emin olun.</string>
+    <string name="action_subscription">⭐ Premium</string>
+    <string name="manage_subscription">✅ Premium Aktif</string>
+    <string name="action_logout">Çıkış Yap</string>
+
+    <!-- Login -->
+    <string name="login_subtitle">Aboneliğinizi doğrulamak ve devam etmek için e-posta adresinizi girin</string>
+    <string name="email_hint">E-posta adresi</string>
+    <string name="btn_continue">Devam Et</string>
+    <string name="login_info">E-posta adresiniz yalnızca aktif aboneliğinizi doğrulamak için kullanılır. Saklanmaz veya paylaşılmaz.</string>
+    <string name="error_invalid_email">Geçerli bir e-posta adresi giriniz</string>
+    <string name="error_network_retry">Bağlantı kurulamadı. İnternet bağlantınızı kontrol edip tekrar deneyin.</string>
+    <string name="checking_subscription">%s için abonelik kontrol ediliyor…</string>
+    <string name="trial_last_day">Ücretsiz denemenizin son günü. Devam etmek için abone olun.</string>
+    <string name="btn_google_signin">Google ile devam et</string>
+    <string name="or">veya</string>
+    <string name="error_google_failed">Google girişi başarısız. Tekrar deneyin.</string>
+    <string name="error_google_no_email">Google hesabından email alınamadı.</string>
 </resources>

@@ -10,6 +10,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:elevation="4dp"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
         <androidx.appcompat.widget.Toolbar
@@ -18,10 +20,9 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/primary"
             app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
-            app:title="Blockcalls"
-            app:titleTextAppearance="@style/TextAppearance.AppCompat.Small"
-            app:titleTextColor="@android:color/white" />
-
+            app:title="@string/app_name"
+            app:titleTextColor="@android:color/white"
+            app:contentInsetStart="16dp" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

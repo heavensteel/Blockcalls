@@ -60,6 +60,46 @@ public class PatternMatcher {
             "27", // South Africa
             "234", // Nigeria
             "254", // Kenya
+            "92",  // Pakistan
+            "880", // Bangladesh
+            "852", // Hong Kong
+            "853", // Macau
+            "855", // Cambodia
+            "856", // Laos
+            "95",  // Myanmar
+            "98",  // Iran
+            "212", // Morocco
+            "213", // Algeria
+            "216", // Tunisia
+            "218", // Libya
+            "961", // Lebanon
+            "962", // Jordan
+            "964", // Iraq
+            "963", // Syria
+            "972", // Israel
+            "994", // Azerbaijan
+            "995", // Georgia
+            "996", // Kyrgyzstan
+            "998", // Uzbekistan
+            "993", // Turkmenistan
+            "992", // Tajikistan
+            "373", // Moldova
+            "374", // Armenia
+            "375", // Belarus
+            "94",  // Sri Lanka
+            "977", // Nepal
+            "975", // Bhutan
+            "960", // Maldives
+            "64",  // New Zealand
+            "57",  // Colombia
+            "58",  // Venezuela
+            "51",  // Peru
+            "56",  // Chile
+            "54",  // Argentina
+            "593", // Ecuador
+            "591", // Bolivia
+            "595", // Paraguay
+            "598", // Uruguay
     };
 
     /**

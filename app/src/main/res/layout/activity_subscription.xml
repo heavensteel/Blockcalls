@@ -262,11 +262,26 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Restore Purchase -->
+            <TextView
+                android:id="@+id/tvRestorePurchase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/restore_purchase"
+                android:textSize="14sp"
+                android:textColor="@color/primary"
+                android:gravity="center"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:textStyle="bold" />
+
             <!-- Footer -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/subscription_footer"
                 android:textSize="12sp"
                 android:textColor="@color/text_hint"

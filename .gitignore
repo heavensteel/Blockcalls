@@ -33,3 +33,6 @@ captures/
 # Log Files
 *.log
 *.err
+
+# Sensitive config files
+google-services.json

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="trial_days_remaining_plural">
+        <item quantity="one">Free trial: %d day remaining</item>
+        <item quantity="other">Free trial: %d days remaining</item>
+    </plurals>
+</resources>

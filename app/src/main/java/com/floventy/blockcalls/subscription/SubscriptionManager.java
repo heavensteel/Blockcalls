@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.android.billingclient.api.AcknowledgePurchaseParams;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingResult;
@@ -40,9 +41,6 @@ public class SubscriptionManager {
 
     private OnStatusUpdatedListener statusListener;
     private OnBillingReadyListener billingReadyListener;
-    // Skip the status listener on the very first cold-start check to avoid
-    // opening the paywall before MainActivity has rendered.
-    private boolean isInitialCheck = true;
 
     public SubscriptionManager(Context context) {
         this.context = context.getApplicationContext();
@@ -141,38 +139,53 @@ public class SubscriptionManager {
                 if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
                     hasPremium = true;
                     Log.d(TAG, "Active subscription: " + purchase.getProducts());
+                    // Acknowledge the purchase if not yet acknowledged.
+                    // Google Play voids unacknowledged subscriptions after 3 days.
+                    if (!purchase.isAcknowledged()) {
+                        acknowledgePurchase(purchase);
+                    }
                     break;
                 }
             }
         }
 
-        boolean previous = prefs.getBoolean(KEY_IS_PREMIUM, true);
+        boolean previous = prefs.getBoolean(KEY_IS_PREMIUM, false);
         prefs.edit().putBoolean(KEY_IS_PREMIUM, hasPremium).apply();
-        Log.d(TAG, "Premium status: " + hasPremium + " (initialCheck=" + isInitialCheck + ")");
+        Log.d(TAG, "Premium status: " + hasPremium + " (previous=" + previous + ")");
 
-        // Skip the listener on the very first cold-start check so we don't
-        // open the paywall before MainActivity has drawn its UI.
-        if (isInitialCheck) {
-            isInitialCheck = false;
-            return;
-        }
-
-        if (statusListener != null && previous != hasPremium) {
+        if (statusListener != null && (!hasPremium || previous != hasPremium)) {
             statusListener.onStatusUpdated(hasPremium);
         }
     }
 
+    /**
+     * Acknowledges a purchase with Google Play.
+     * Required for all subscriptions — unacknowledged purchases are voided after 3 days.
+     */
+    private void acknowledgePurchase(Purchase purchase) {
+        AcknowledgePurchaseParams params = AcknowledgePurchaseParams.newBuilder()
+                .setPurchaseToken(purchase.getPurchaseToken())
+                .build();
+        billingClient.acknowledgePurchase(params, billingResult -> {
+            if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                Log.d(TAG, "Purchase acknowledged: " + purchase.getProducts());
+            } else {
+                Log.w(TAG, "Acknowledge failed: " + billingResult.getDebugMessage());
+            }
+        });
+    }
+
     public boolean canUseApp() {
-        return prefs.getBoolean(KEY_IS_PREMIUM, true);
+        return prefs.getBoolean(KEY_IS_PREMIUM, false);
     }
 
     public static boolean isAppPremium(Context context) {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-                .getBoolean(KEY_IS_PREMIUM, true);
+                .getBoolean(KEY_IS_PREMIUM, false);
     }
 
     public boolean hasActiveSubscription() {
-        return prefs.getBoolean(KEY_IS_PREMIUM, true);
+        return prefs.getBoolean(KEY_IS_PREMIUM, false);
     }
 
     public void refreshSubscriptionStatus() {

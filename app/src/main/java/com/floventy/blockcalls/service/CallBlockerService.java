@@ -14,6 +14,7 @@ import com.floventy.blockcalls.data.BlockedNumber;
 import com.floventy.blockcalls.subscription.SubscriptionManager;
 import com.floventy.blockcalls.utils.ContactChecker;
 import com.floventy.blockcalls.utils.PatternMatcher;
+import com.floventy.blockcalls.utils.TrustedNumbers;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -107,6 +108,13 @@ public class CallBlockerService extends CallScreeningService {
             // call
             if (!SubscriptionManager.isAppPremium(getApplicationContext())) {
                 Log.d(TAG, "No active subscription, not blocking calls");
+                return false;
+            }
+
+            // Skip blocking if the number is in the trusted whitelist
+            // (banks, cargo companies, government lines, e-commerce, etc.)
+            if (TrustedNumbers.isTrusted(phoneNumber)) {
+                Log.d(TAG, "Trusted number, allowing call: " + phoneNumber);
                 return false;
             }
 

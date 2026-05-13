@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.floventy.blockcalls.R;
+import com.floventy.blockcalls.subscription.FirebaseSubscriptionHelper;
 import com.floventy.blockcalls.subscription.SubscriptionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -42,7 +43,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Gate: if no email saved, send to login
+        if (FirebaseSubscriptionHelper.getSavedEmail(this) == null) {
+            startActivity(new Intent(this, LoginActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_main);
+
+        // Show trial banner if user arrived from login with days remaining
+        int trialDaysLeft = getIntent().getIntExtra("trial_days_left", -1);
+        if (trialDaysLeft >= 0) {
+            String msg = trialDaysLeft == 0
+                    ? getString(R.string.trial_last_day)
+                    : getResources().getQuantityString(R.plurals.trial_days_remaining_plural, trialDaysLeft, trialDaysLeft);
+            Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+        }
 
         // Setup toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -118,9 +137,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         activityResumed = true;
-        // Only refresh billing status - listener in onCreate handles the redirect
+        // Refresh Play Billing status
         if (subscriptionManager != null) {
             subscriptionManager.refreshSubscriptionStatus();
+        }
+        // Also refresh Firestore subscription status in background
+        String email = FirebaseSubscriptionHelper.getSavedEmail(this);
+        if (email != null) {
+            FirebaseSubscriptionHelper.checkSubscription(email, new FirebaseSubscriptionHelper.SubscriptionCallback() {
+                @Override
+                public void onResult(boolean isActive, int trialDaysLeft) {
+                    FirebaseSubscriptionHelper.savePremiumStatus(MainActivity.this, isActive);
+                    if (!isActive && activityResumed && !subscriptionScreenShown) {
+                        runOnUiThread(() -> {
+                            subscriptionScreenShown = true;
+                            Intent intent = new Intent(MainActivity.this, SubscriptionActivity.class);
+                            intent.putExtra("trial_expired", trialDaysLeft == 0);
+                            startActivityForResult(intent, SUBSCRIPTION_REQUEST_CODE);
+                        });
+                    }
+                    runOnUiThread(() -> invalidateOptionsMenu());
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    // Network unavailable — keep using cached status
+                }
+            });
         }
     }
 
@@ -166,6 +209,13 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_subscription) {
             Intent intent = new Intent(this, SubscriptionActivity.class);
             startActivityForResult(intent, SUBSCRIPTION_REQUEST_CODE);
+            return true;
+        }
+        if (item.getItemId() == R.id.action_logout) {
+            FirebaseSubscriptionHelper.logout(this);
+            startActivity(new Intent(this, LoginActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
