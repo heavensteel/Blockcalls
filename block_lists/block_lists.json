@@ -1,0 +1,241 @@
+{
+  "version": 1,
+  "updated_at": "2026-06-02",
+  "countries": [
+    {
+      "code": "TR",
+      "name": "Türkiye",
+      "flag": "🇹🇷",
+      "categories": [
+        {
+          "id": "tr_banks",
+          "name": "🏦 Bankalar",
+          "description": "Ziraat, Halkbank, İşbank, Garanti, Akbank, DenizBank vb.",
+          "patterns": [
+            "+908502200000",
+            "+9044400000",
+            "+908502220400",
+            "+9044440400",
+            "+90850724*",
+            "+9044440724",
+            "+908502220333",
+            "+9044440333",
+            "+9044425*",
+            "+908502252*",
+            "+908502220800",
+            "+9044440800",
+            "+908502220900",
+            "+9044440900",
+            "+908502222244",
+            "+908502225666",
+            "+9044440123",
+            "+908502223661"
+          ]
+        },
+        {
+          "id": "tr_gsm",
+          "name": "📱 GSM Operatörleri",
+          "description": "Turkcell, Vodafone, Türk Telekom, Superonline, D-Smart, DigiTürk",
+          "patterns": [
+            "+905327552222",
+            "+905320532*",
+            "+908502221222",
+            "+9044454*",
+            "+905005*",
+            "+908502660266",
+            "+902124732321"
+          ]
+        },
+        {
+          "id": "tr_cargo",
+          "name": "📦 Kargo Firmaları",
+          "description": "Yurtiçi, Aras, MNG, PTT Kargo",
+          "patterns": [
+            "+9044499*",
+            "+9044425*",
+            "+908502220606",
+            "+908508118081"
+          ]
+        },
+        {
+          "id": "tr_ecommerce",
+          "name": "🛒 E-Ticaret Platformları",
+          "description": "Trendyol, Hepsiburada, n11, Amazon, ÇiçekSepeti",
+          "patterns": [
+            "+902123310200",
+            "+908502524800",
+            "+908503330811",
+            "+908502000456",
+            "+908502000079"
+          ]
+        },
+        {
+          "id": "tr_market",
+          "name": "🛍️ Market ve Kurye",
+          "description": "Getir, Migros, CarrefourSA",
+          "patterns": [
+            "+905425445*",
+            "+908505325050",
+            "+9044441090"
+          ]
+        },
+        {
+          "id": "tr_airline",
+          "name": "✈️ Havayolları",
+          "description": "Türk Hava Yolları, Pegasus Airlines",
+          "patterns": [
+            "+908503330849",
+            "+908882281212"
+          ]
+        },
+        {
+          "id": "tr_utilities",
+          "name": "⚡ Elektrik Dağıtım",
+          "description": "BİLDİŞ, AYEDAŞ, CK Enerji, Başkent EDAŞ, Uludağ Elektrik",
+          "patterns": [
+            "+904440186",
+            "+904444372",
+            "+904440608"
+          ]
+        },
+        {
+          "id": "tr_gas",
+          "name": "🔥 Doğalgaz",
+          "description": "İGDAŞ, Başlengizer, Enerjisa, Aksa Doğalgaz",
+          "patterns": [
+            "+904440425",
+            "+904444079",
+            "+904444187"
+          ]
+        },
+        {
+          "id": "tr_isp",
+          "name": "🌐 İnternet Sağlayıcıları",
+          "description": "TurkNet, Millenicom, Turksat",
+          "patterns": [
+            "+908502888000",
+            "+908503330333",
+            "+908508044444"
+          ]
+        },
+        {
+          "id": "tr_telemarketing",
+          "name": "📢 Tüm 0850 / 444 (Geniş Engelleme)",
+          "description": "Tüm 0850 ve 444 numaralı aramaları engeller",
+          "patterns": [
+            "+90850*",
+            "+90444*"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "VN",
+      "name": "Vietnam",
+      "flag": "🇻🇳",
+      "categories": [
+        {
+          "id": "vn_banks",
+          "name": "🏦 Ngân Hàng (Bankalar)",
+          "description": "Vietcombank, VietinBank, BIDV, Techcombank, MB...",
+          "patterns": [
+            "+8418001198",
+            "+8418001507",
+            "+8419009247",
+            "+8418005888",
+            "+8419005454",
+            "+8419008198",
+            "+8419001553",
+            "+8419001004"
+          ]
+        },
+        {
+          "id": "vn_cargo",
+          "name": "📦 Chuyển Phát (Kargo)",
+          "description": "Giao Hang Nhanh, Viettel Post, VNPost",
+          "patterns": [
+            "+8419001237",
+            "+8418001733",
+            "+8418001789"
+          ]
+        },
+        {
+          "id": "vn_spam",
+          "name": "📢 Spam / Telemarketing",
+          "description": "Ho Chi Minh City ve Hanoi spam numaraları",
+          "patterns": [
+            "+8428*",
+            "+8424*"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "US",
+      "name": "United States",
+      "flag": "🇺🇸",
+      "categories": [
+        {
+          "id": "us_tollfree",
+          "name": "📢 Robocalls / Toll-Free Spam",
+          "description": "800, 888, 877, 866, 855, 844 numaraları",
+          "patterns": [
+            "+1800*",
+            "+1888*",
+            "+1877*",
+            "+1866*",
+            "+1855*",
+            "+1844*",
+            "+1833*"
+          ]
+        },
+        {
+          "id": "us_scam",
+          "name": "🚨 Scam / Dolandırıcılık",
+          "description": "Bilinen scam area code'ları",
+          "patterns": [
+            "+1202456*",
+            "+1347*"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "DE",
+      "name": "Deutschland",
+      "flag": "🇩🇪",
+      "categories": [
+        {
+          "id": "de_spam",
+          "name": "📢 Werbeanrufe (Telemarketing)",
+          "description": "Ücretsiz ve premium Almanya numaraları",
+          "patterns": [
+            "+49800*",
+            "+49900*",
+            "+49180*"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "flag": "🇬🇧",
+      "categories": [
+        {
+          "id": "gb_nuisance",
+          "name": "📢 Nuisance / Spam Calls",
+          "description": "UK spam ve premium rate numaraları",
+          "patterns": [
+            "+440800*",
+            "+440843*",
+            "+440844*",
+            "+440845*",
+            "+440870*",
+            "+440871*"
+          ]
+        }
+      ]
+    }
+  ]
+}
