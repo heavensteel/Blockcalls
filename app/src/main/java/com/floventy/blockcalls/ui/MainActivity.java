@@ -44,13 +44,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Show trial banner if user arrived from login with days remaining
+        // Trial banner (legacy — no longer triggered since login was removed)
         int trialDaysLeft = getIntent().getIntExtra("trial_days_left", -1);
-        if (trialDaysLeft >= 0) {
-            String msg = trialDaysLeft == 0
-                    ? getString(R.string.trial_last_day)
-                    : getResources().getQuantityString(R.plurals.trial_days_remaining_plural, trialDaysLeft, trialDaysLeft);
-            Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+        if (trialDaysLeft == 0) {
+            Toast.makeText(this, getString(R.string.trial_expired), Toast.LENGTH_LONG).show();
+        } else if (trialDaysLeft > 0) {
+            Toast.makeText(this, getString(R.string.trial_days_remaining, trialDaysLeft), Toast.LENGTH_LONG).show();
         }
 
         // Setup toolbar
