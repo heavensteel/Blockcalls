@@ -50,6 +50,7 @@ public class RulesFragment extends Fragment {
         emptyState = view.findViewById(R.id.emptyState);
         recyclerView = view.findViewById(R.id.recyclerView);
         FloatingActionButton fabAdd = view.findViewById(R.id.fabAdd);
+        FloatingActionButton fabBlockLists = view.findViewById(R.id.fabBlockLists);
 
         adapter = new BlockedNumberAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -87,6 +88,11 @@ public class RulesFragment extends Fragment {
         });
 
         fabAdd.setOnClickListener(v -> showAddPatternDialog());
+        fabBlockLists.setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(
+                    requireContext(), BlockListsActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void showPopupMenu(BlockedNumber blockedNumber, View anchor) {

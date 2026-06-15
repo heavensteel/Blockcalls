@@ -50,10 +50,10 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingTop="8dp"
-        android:paddingBottom="80dp"
+        android:paddingBottom="120dp"
         android:paddingHorizontal="4dp" />
 
-    <!-- Floating Action Button — properly floats over content -->
+    <!-- FAB: Add custom rule -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"
         android:layout_width="wrap_content"
@@ -64,5 +64,19 @@
         android:src="@android:drawable/ic_input_add"
         app:tint="@color/white"
         app:backgroundTint="@color/primary" />
+
+    <!-- FAB: Pre-made lists (above the add FAB) -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabBlockLists"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="88dp"
+        android:contentDescription="Hazır Listeler"
+        android:src="@android:drawable/ic_menu_agenda"
+        app:tint="@color/white"
+        app:backgroundTint="@color/accent"
+        app:fabSize="mini" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

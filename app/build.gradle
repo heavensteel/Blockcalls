@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.application'
-    id 'com.google.gms.google-services'
 }
 
 android {
@@ -11,8 +10,8 @@ android {
         applicationId "com.floventy.blockcalls"
         minSdk 29  // Android 10 (Q) - required for targetSdk 35
         targetSdk 35
-        versionCode 9
-        versionName "1.8"
+        versionCode 10
+        versionName "1.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     } 
@@ -64,13 +63,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     
-    // Firebase
-    implementation platform('com.google.firebase:firebase-bom:33.1.0')
-    implementation 'com.google.firebase:firebase-firestore'
-    implementation 'com.google.firebase:firebase-auth'
-
-    // Google Sign-In
-    implementation 'com.google.android.gms:play-services-auth:21.2.0'
 
     // Testing
     testImplementation 'junit:junit:4.13.2'

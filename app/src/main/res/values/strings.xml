@@ -108,19 +108,13 @@
     <string name="error_product_not_available">Product not available. Make sure you are using the Play Store version.</string>
     <string name="action_subscription">⭐ Premium</string>
     <string name="manage_subscription">✅ Premium Active</string>
-    <string name="action_logout">Logout</string>
 
-    <!-- Login -->
-    <string name="login_subtitle">Enter your email to verify your subscription and continue</string>
-    <string name="email_hint">Email address</string>
-    <string name="btn_continue">Continue</string>
-    <string name="login_info">Your email is used only to verify your active subscription. We do not store or share it.</string>
-    <string name="error_invalid_email">Please enter a valid email address</string>
-    <string name="error_network_retry">Could not connect. Check your internet connection and try again.</string>
-    <string name="checking_subscription">Verifying subscription for %s…</string>
-    <string name="trial_last_day">Last day of your free trial. Subscribe to continue.</string>
-    <string name="btn_google_signin">Continue with Google</string>
-    <string name="or">or</string>
-    <string name="error_google_failed">Google sign-in failed. Please try again.</string>
-    <string name="error_google_no_email">Could not get email from Google account.</string>
+    <!-- Block Lists -->
+    <string name="block_lists_title">Hazır Engelleme Listeleri</string>
+    <string name="block_lists_loading">Listeler yükleniyor…</string>
+    <string name="block_lists_error">Bağlantı hatası</string>
+    <string name="block_lists_retry">Tekrar Dene</string>
+    <string name="block_lists_add_selected">Seçilenleri Ekle</string>
+    <string name="block_lists_added">%d kural eklendi</string>
+    <string name="block_lists_none_selected">Hiçbir kategori seçilmedi</string>
 </resources>
