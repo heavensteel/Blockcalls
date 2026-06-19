@@ -10,8 +10,8 @@ android {
         applicationId "com.floventy.blockcalls"
         minSdk 29  // Android 10 (Q) - required for targetSdk 35
         targetSdk 35
-        versionCode 11
-        versionName "2.0"
+        versionCode 12
+        versionName "2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     } 
