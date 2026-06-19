@@ -213,6 +213,9 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, OnboardingActivity.class);
             startActivity(intent);
             return true;
+        } else if (item.getItemId() == R.id.action_suggest_safe) {
+            showSuggestSafeNumberDialog();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -284,6 +287,64 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_LONG).show();
             }
+        }
+    }
+
+    private void showSuggestSafeNumberDialog() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setTitle(R.string.suggest_safe_title);
+        builder.setMessage(R.string.suggest_safe_desc);
+
+        android.widget.LinearLayout layout = new android.widget.LinearLayout(this);
+        layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+        int padding = (int) android.util.TypedValue.applyDimension(android.util.TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+        layout.setPadding(padding, padding, padding, padding);
+
+        final com.google.android.material.textfield.TextInputEditText etNumber = new com.google.android.material.textfield.TextInputEditText(this);
+        etNumber.setHint(R.string.suggest_safe_num_hint);
+        etNumber.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
+        android.widget.LinearLayout.LayoutParams params1 = new android.widget.LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        params1.bottomMargin = (int) android.util.TypedValue.applyDimension(android.util.TypedValue.COMPLEX_UNIT_DIP, 12, getResources().getDisplayMetrics());
+        etNumber.setLayoutParams(params1);
+        layout.addView(etNumber);
+
+        final com.google.android.material.textfield.TextInputEditText etName = new com.google.android.material.textfield.TextInputEditText(this);
+        etName.setHint(R.string.suggest_safe_name_hint);
+        etName.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
+        etName.setLayoutParams(new android.widget.LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+        layout.addView(etName);
+
+        builder.setView(layout);
+
+        builder.setPositiveButton(R.string.suggest_safe_send, (dialog, which) -> {
+            String number = etNumber.getText() != null ? etNumber.getText().toString().trim() : "";
+            String name = etName.getText() != null ? etName.getText().toString().trim() : "";
+
+            if (number.isEmpty()) {
+                Toast.makeText(this, "Numara alanı boş olamaz", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            sendSafeNumberEmail(number, name);
+        });
+
+        builder.setNegativeButton(R.string.cancel, null);
+        builder.show();
+    }
+
+    private void sendSafeNumberEmail(String number, String name) {
+        String body = "Önerilen Güvenli Numara: " + number + "\nFirma/Kurum Adı: " + name + "\n\nCihaz Modeli: " + android.os.Build.MODEL + "\nAndroid Sürümü: " + android.os.Build.VERSION.RELEASE;
+        
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(android.net.Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"support@floventy.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.suggest_safe_email_subject));
+        intent.putExtra(Intent.EXTRA_TEXT, body);
+
+        try {
+            startActivity(Intent.createChooser(intent, "E-posta Uygulaması Seçin"));
+        } catch (Exception e) {
+            Toast.makeText(this, "E-posta uygulaması bulunamadı", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -129,4 +129,13 @@
     <string name="onboarding_btn_next">Next</string>
     <string name="onboarding_btn_skip">Skip</string>
     <string name="onboarding_btn_start">Get Started</string>
+
+    <!-- Suggest Safe Number -->
+    <string name="action_suggest_safe">Report Safe Number</string>
+    <string name="suggest_safe_title">Suggest Safe Number</string>
+    <string name="suggest_safe_desc">Enter a number (and description) that you never want blocked. We will review and update the safe list.</string>
+    <string name="suggest_safe_num_hint">Phone Number (e.g. 0850...)</string>
+    <string name="suggest_safe_name_hint">Company/Bank Name</string>
+    <string name="suggest_safe_send">Send Suggestion</string>
+    <string name="suggest_safe_email_subject">SpamBlock - Safe Number Suggestion</string>
 </resources>

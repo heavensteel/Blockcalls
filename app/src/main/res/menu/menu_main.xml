@@ -13,5 +13,10 @@
         android:title="@string/action_guide"
         android:icon="@drawable/ic_help_outline"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_suggest_safe"
+        android:title="@string/action_suggest_safe"
+        app:showAsAction="never" />
 </menu>
 

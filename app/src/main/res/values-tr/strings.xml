@@ -129,5 +129,14 @@
     <string name="onboarding_btn_next">İleri</string>
     <string name="onboarding_btn_skip">Geç</string>
     <string name="onboarding_btn_start">Başla</string>
+
+    <!-- Suggest Safe Number -->
+    <string name="action_suggest_safe">Güvenli Numara Bildir</string>
+    <string name="suggest_safe_title">Güvenli Numara Öner</string>
+    <string name="suggest_safe_desc">Asla engellenmesini istemediğiniz bir banka, kargo veya kurumsal numarayı bildirin. İnceleyip listeye ekleyelim.</string>
+    <string name="suggest_safe_num_hint">Telefon Numarası (örn: 0850...)</string>
+    <string name="suggest_safe_name_hint">Kurum / Firma Adı</string>
+    <string name="suggest_safe_send">Öneri Gönder</string>
+    <string name="suggest_safe_email_subject">SpamBlock - Güvenli Numara Önerisi</string>
 </resources>
 
