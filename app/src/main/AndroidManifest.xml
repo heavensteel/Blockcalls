@@ -53,6 +53,12 @@
             android:exported="false"
             android:theme="@style/Theme.BlockCalls" />
         
+        <!-- Onboarding / Guide Activity -->
+        <activity
+            android:name=".ui.OnboardingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.BlockCalls" />
+        
         
         <!-- Call Screening Service (primary method) -->
         <service

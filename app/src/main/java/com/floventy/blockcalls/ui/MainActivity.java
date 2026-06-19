@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     private final RulesFragment rulesFragment = new RulesFragment();
     private final BlockedCallsFragment blockedCallsFragment = new BlockedCallsFragment();
+    private final GuideFragment guideFragment = new GuideFragment();
+    private final PremiumFragment premiumFragment = new PremiumFragment();
     private Fragment activeFragment;
     private SubscriptionManager subscriptionManager;
     private boolean subscriptionScreenShown = false;
@@ -59,13 +61,12 @@ public class MainActivity extends AppCompatActivity {
         // Setup bottom navigation
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
 
-        // Add both fragments, hide blocked calls initially
+        // Add all fragments, hide non-active initially
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragmentContainer, blockedCallsFragment, "blocked_calls")
-                    .hide(blockedCallsFragment)
-                    .commit();
-            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragmentContainer, blockedCallsFragment, "blocked_calls").hide(blockedCallsFragment)
+                    .add(R.id.fragmentContainer, guideFragment, "guide").hide(guideFragment)
+                    .add(R.id.fragmentContainer, premiumFragment, "premium").hide(premiumFragment)
                     .add(R.id.fragmentContainer, rulesFragment, "rules")
                     .commit();
             activeFragment = rulesFragment;
@@ -82,6 +83,16 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = blockedCallsFragment;
                 if (getSupportActionBar() != null) {
                     getSupportActionBar().setTitle(R.string.blocked_calls_log);
+                }
+            } else if (item.getItemId() == R.id.nav_guide) {
+                selectedFragment = guideFragment;
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(R.string.action_guide);
+                }
+            } else if (item.getItemId() == R.id.nav_premium) {
+                selectedFragment = premiumFragment;
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(R.string.subscription_title);
                 }
             } else {
                 return false;
@@ -120,6 +131,29 @@ public class MainActivity extends AppCompatActivity {
 
         // Check permissions
         checkPermissions();
+
+        // Initialize local dynamic safe list cache
+        com.floventy.blockcalls.utils.TrustedNumbers.initialize(this);
+
+        // Fetch dynamic Whitelist from GitHub
+        new com.floventy.blockcalls.utils.TrustedListsFetcher().fetch(this, new com.floventy.blockcalls.utils.TrustedListsFetcher.Callback() {
+            @Override
+            public void onSuccess(java.util.List<String> prefixes, java.util.List<String> exact) {
+                com.floventy.blockcalls.utils.TrustedNumbers.setDynamicLists(prefixes, exact);
+            }
+
+            @Override
+            public void onError(String message) {
+                android.util.Log.w("MainActivity", "Failed to fetch dynamic safe lists: " + message);
+            }
+        });
+
+        // First run onboarding check
+        android.content.SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+        if (!prefs.getBoolean("onboarding_shown", false)) {
+            Intent intent = new Intent(this, OnboardingActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -174,6 +208,10 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_subscription) {
             Intent intent = new Intent(this, SubscriptionActivity.class);
             startActivityForResult(intent, SUBSCRIPTION_REQUEST_CODE);
+            return true;
+        } else if (item.getItemId() == R.id.action_guide) {
+            Intent intent = new Intent(this, OnboardingActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);

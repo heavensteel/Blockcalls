@@ -1,5 +1,9 @@
 package com.floventy.blockcalls.utils;
 
+import android.content.Context;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Whitelist of trusted phone numbers and prefixes that should NEVER be blocked,
  * even if a user-defined rule would match them.
@@ -17,6 +21,11 @@ package com.floventy.blockcalls.utils;
  *  - TRUSTED_EXACT:    number matches exactly (digits only)
  */
 public class TrustedNumbers {
+
+    private static List<String> dynamicPrefixes = new ArrayList<>();
+    private static List<String> dynamicExact = new ArrayList<>();
+    private static final Object lock = new Object();
+
 
     // ─── Prefix whitelist ─────────────────────────────────────────────────────
     // A call is trusted if its normalized number STARTS WITH any of these prefixes.
@@ -295,6 +304,60 @@ public class TrustedNumbers {
     // ─── Public API ───────────────────────────────────────────────────────────
 
     /**
+     * Initializes the dynamic whitelists by reading the cached JSON file.
+     */
+    public static void initialize(Context context) {
+        synchronized (lock) {
+            try {
+                java.io.File file = new java.io.File(context.getFilesDir(), "safe_lists_cache.json");
+                if (file.exists()) {
+                    java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(file));
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line).append('\n');
+                    }
+                    br.close();
+
+                    org.json.JSONObject root = new org.json.JSONObject(sb.toString());
+                    org.json.JSONArray prefixesJson = root.optJSONArray("prefixes");
+                    List<String> prefixes = new ArrayList<>();
+                    if (prefixesJson != null) {
+                        for (int i = 0; i < prefixesJson.length(); i++) {
+                            prefixes.add(prefixesJson.getString(i));
+                        }
+                    }
+
+                    org.json.JSONArray exactJson = root.optJSONArray("exact");
+                    List<String> exact = new ArrayList<>();
+                    if (exactJson != null) {
+                        for (int i = 0; i < exactJson.length(); i++) {
+                            exact.add(exactJson.getString(i));
+                        }
+                    }
+
+                    dynamicPrefixes = prefixes;
+                    dynamicExact = exact;
+                    android.util.Log.d("TrustedNumbers", "Loaded from cache: " + dynamicPrefixes.size() + " prefixes, " + dynamicExact.size() + " exact numbers.");
+                }
+            } catch (Exception e) {
+                android.util.Log.w("TrustedNumbers", "Failed to load dynamic safe list from cache", e);
+            }
+        }
+    }
+
+    /**
+     * Sets the dynamic whitelists in RAM. Called after successful download.
+     */
+    public static void setDynamicLists(List<String> prefixes, List<String> exact) {
+        synchronized (lock) {
+            dynamicPrefixes = prefixes != null ? prefixes : new ArrayList<>();
+            dynamicExact = exact != null ? exact : new ArrayList<>();
+            android.util.Log.d("TrustedNumbers", "Dynamic safe lists updated: " + dynamicPrefixes.size() + " prefixes, " + dynamicExact.size() + " exact numbers.");
+        }
+    }
+
+    /**
      * Returns true if the phone number is in the trusted whitelist.
      * Normalized (digits only) comparison.
      *
@@ -307,7 +370,22 @@ public class TrustedNumbers {
         String normalized = normalize(phoneNumber);
         if (normalized.isEmpty()) return false;
 
-        // Check prefix whitelist
+        synchronized (lock) {
+            // Check dynamic prefix list
+            if (dynamicPrefixes != null) {
+                for (String prefix : dynamicPrefixes) {
+                    if (normalized.startsWith(normalize(prefix))) return true;
+                }
+            }
+            // Check dynamic exact list
+            if (dynamicExact != null) {
+                for (String trusted : dynamicExact) {
+                    if (normalized.equals(normalize(trusted))) return true;
+                }
+            }
+        }
+
+        // Check fallback hardcoded whitelist
         for (String prefix : TRUSTED_PREFIXES) {
             if (normalized.startsWith(prefix)) return true;
         }
@@ -321,6 +399,18 @@ public class TrustedNumbers {
         // Also try stripping the Turkish country code (+90 / 90) and re-checking
         String stripped = stripTurkishPrefix(normalized);
         if (!stripped.equals(normalized)) {
+            synchronized (lock) {
+                if (dynamicPrefixes != null) {
+                    for (String prefix : dynamicPrefixes) {
+                        if (stripped.startsWith(normalize(prefix))) return true;
+                    }
+                }
+                if (dynamicExact != null) {
+                    for (String trusted : dynamicExact) {
+                        if (stripped.equals(normalize(trusted))) return true;
+                    }
+                }
+            }
             for (String prefix : TRUSTED_PREFIXES) {
                 if (stripped.startsWith(prefix)) return true;
             }

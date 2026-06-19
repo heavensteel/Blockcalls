@@ -149,6 +149,10 @@ public class SubscriptionManager {
             }
         }
 
+        if (isDebugMode(context)) {
+            hasPremium = true;
+        }
+
         boolean previous = prefs.getBoolean(KEY_IS_PREMIUM, false);
         prefs.edit().putBoolean(KEY_IS_PREMIUM, hasPremium).apply();
         Log.d(TAG, "Premium status: " + hasPremium + " (previous=" + previous + ")");
@@ -176,15 +180,18 @@ public class SubscriptionManager {
     }
 
     public boolean canUseApp() {
+        if (isDebugMode(context)) return true;
         return prefs.getBoolean(KEY_IS_PREMIUM, false);
     }
 
     public static boolean isAppPremium(Context context) {
+        if (isDebugMode(context)) return true;
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
                 .getBoolean(KEY_IS_PREMIUM, false);
     }
 
     public boolean hasActiveSubscription() {
+        if (isDebugMode(context)) return true;
         return prefs.getBoolean(KEY_IS_PREMIUM, false);
     }
 
@@ -215,6 +222,14 @@ public class SubscriptionManager {
     public void destroy() {
         if (billingClient != null) {
             billingClient.endConnection();
+        }
+    }
+
+    private static boolean isDebugMode(Context ctx) {
+        try {
+            return (ctx.getApplicationInfo().flags & android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        } catch (Exception e) {
+            return false;
         }
     }
 }

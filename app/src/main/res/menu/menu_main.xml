@@ -8,7 +8,10 @@
         android:icon="@drawable/ic_premium_star"
         app:showAsAction="always" />
 
-
-
+    <item
+        android:id="@+id/action_guide"
+        android:title="@string/action_guide"
+        android:icon="@drawable/ic_help_outline"
+        app:showAsAction="ifRoom" />
 </menu>
 

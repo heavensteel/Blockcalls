@@ -11,4 +11,14 @@
         android:icon="@android:drawable/ic_menu_recent_history"
         android:title="@string/tab_blocked_calls" />
 
+    <item
+        android:id="@+id/nav_guide"
+        android:icon="@drawable/ic_help_outline"
+        android:title="@string/action_guide" />
+
+    <item
+        android:id="@+id/nav_premium"
+        android:icon="@drawable/ic_premium_star"
+        android:title="@string/premium_icon" />
+
 </menu>

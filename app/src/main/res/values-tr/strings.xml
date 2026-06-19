@@ -117,5 +117,17 @@
     <string name="block_lists_add_selected">Seçilenleri Ekle</string>
     <string name="block_lists_added">%d kural eklendi</string>
     <string name="block_lists_none_selected">Hiçbir kategori seçilmedi</string>
+
+    <!-- Onboarding / Guide -->
+    <string name="action_guide">Nasıl Kullanılır?</string>
+    <string name="onboarding_title_1">Akıllı Arama Engelleme</string>
+    <string name="onboarding_desc_1">SpamBlock, arka planda istenmeyen aramaları otomatik olarak filtreler ve engeller. Başlamak için Arama Engelleme iznini aktif edelim.</string>
+    <string name="onboarding_title_2">Esnek Engelleme Kuralları</string>
+    <string name="onboarding_desc_2">Ön ekleri yazarak tüm numara gruplarını engelleyin (örn: +90 0850*). Son haneleri eşleştirmek için * karakterini kullanın.</string>
+    <string name="onboarding_title_3">Hazır Engelleme Listeleri</string>
+    <string name="onboarding_desc_3">Bankalar, kargocular veya tele-pazarlamacıların güncel listelerini tek dokunuşla ekleyin. Listenizi sürekli güncel tutun.</string>
+    <string name="onboarding_btn_next">İleri</string>
+    <string name="onboarding_btn_skip">Geç</string>
+    <string name="onboarding_btn_start">Başla</string>
 </resources>
 

@@ -117,4 +117,16 @@
     <string name="block_lists_add_selected">Seçilenleri Ekle</string>
     <string name="block_lists_added">%d kural eklendi</string>
     <string name="block_lists_none_selected">Hiçbir kategori seçilmedi</string>
+
+    <!-- Onboarding / Guide -->
+    <string name="action_guide">Help</string>
+    <string name="onboarding_title_1">Smart Call Blocker</string>
+    <string name="onboarding_desc_1">SpamBlock automatically screens and blocks unwanted calls in the background. First, let\'s activate the Call Screening permission.</string>
+    <string name="onboarding_title_2">Smart Blocking Rules</string>
+    <string name="onboarding_desc_2">Block any range of numbers by typing prefixes (e.g. +90 0850*). Use * as a wildcard to match any ending digits.</string>
+    <string name="onboarding_title_3">Pre-made Block Lists</string>
+    <string name="onboarding_desc_3">Easily import lists of banks, courier companies, or telemarketers with a single click. Keep your rules updated automatically.</string>
+    <string name="onboarding_btn_next">Next</string>
+    <string name="onboarding_btn_skip">Skip</string>
+    <string name="onboarding_btn_start">Get Started</string>
 </resources>
