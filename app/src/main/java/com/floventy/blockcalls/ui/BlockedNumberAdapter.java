@@ -74,12 +74,14 @@ public class BlockedNumberAdapter extends ListAdapter<BlockedNumber, BlockedNumb
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textPattern;
+        private final TextView textName;
         private final TextView textSubtitle;
         private final SwitchMaterial switchEnabled;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textPattern = itemView.findViewById(R.id.textPattern);
+            textName = itemView.findViewById(R.id.textName);
             textSubtitle = itemView.findViewById(R.id.textSubtitle);
             switchEnabled = itemView.findViewById(R.id.switchEnabled);
 
@@ -112,6 +114,15 @@ public class BlockedNumberAdapter extends ListAdapter<BlockedNumber, BlockedNumb
         public void bind(BlockedNumber blockedNumber) {
             textPattern.setText(blockedNumber.getPattern());
 
+            // Lookup and display name if matches a known institution
+            String name = com.floventy.blockcalls.utils.TrustedNumbers.getTrustedNameFor(blockedNumber.getPattern());
+            if (name != null && !name.isEmpty()) {
+                textName.setText(name);
+                textName.setVisibility(View.VISIBLE);
+            } else {
+                textName.setVisibility(View.GONE);
+            }
+
             // Format date added
             SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
             String dateStr = sdf.format(new Date(blockedNumber.getDateAdded()));
@@ -133,6 +144,7 @@ public class BlockedNumberAdapter extends ListAdapter<BlockedNumber, BlockedNumb
             // Dim the entire row when the rule is disabled
             float alpha = blockedNumber.isEnabled() ? 1.0f : 0.45f;
             textPattern.setAlpha(alpha);
+            textName.setAlpha(alpha);
             textSubtitle.setAlpha(alpha);
         }
     }

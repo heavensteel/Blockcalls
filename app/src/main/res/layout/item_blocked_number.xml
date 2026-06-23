@@ -41,6 +41,17 @@
                 android:ellipsize="end"
                 android:text="0850*" />
 
+            <!-- Company name (e.g. Akbank) if matched -->
+            <TextView
+                android:id="@+id/textName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="13sp"
+                android:textColor="@color/text_secondary"
+                android:visibility="gone"
+                android:text="Akbank" />
+
             <!-- Subtitle: wildcard badge and date added -->
             <TextView
                 android:id="@+id/textSubtitle"

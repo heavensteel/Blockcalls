@@ -550,6 +550,53 @@ public class TrustedNumbers {
         }
     }
 
+    /**
+     * Returns the institution name for a trusted pattern/number, or null if unknown or generic.
+     */
+    public static String getTrustedNameFor(String patternOrNumber) {
+        if (patternOrNumber == null || patternOrNumber.isEmpty()) return null;
+
+        String normalized = normalize(patternOrNumber);
+
+        synchronized (lock) {
+            if (dynamicExact != null) {
+                for (TrustedEntry entry : dynamicExact) {
+                    if (normalize(entry.numberOrPattern).equals(normalized) || entry.numberOrPattern.equals(patternOrNumber)) {
+                        return entry.name;
+                    }
+                }
+            }
+            if (dynamicPrefixes != null) {
+                for (TrustedEntry entry : dynamicPrefixes) {
+                    if (normalize(entry.numberOrPattern).equals(normalized) || entry.numberOrPattern.equals(patternOrNumber)) {
+                        return entry.name;
+                    }
+                }
+            }
+        }
+
+        // Check fallback lists
+        for (String exact : TRUSTED_EXACT) {
+            if (normalize(exact).equals(normalized)) {
+                String name = getHardcodedNameFor(exact, false);
+                if (name != null && !name.equals("Güvenli Numara")) {
+                    return name;
+                }
+            }
+        }
+
+        for (String prefix : TRUSTED_PREFIXES) {
+            if (prefix.equals(normalized) || normalized.startsWith(prefix)) {
+                String name = getHardcodedNameFor(prefix, true);
+                if (name != null && !name.equals("Güvenli Numara (Ön Tanımlı)") && !name.equals("Kurumsal Hatlar")) {
+                    return name;
+                }
+            }
+        }
+
+        return null;
+    }
+
     // ─── Helpers ──────────────────────────────────────────────────────────────
 
     /** Strip all non-digit characters. */
