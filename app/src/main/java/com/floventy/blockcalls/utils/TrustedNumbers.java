@@ -556,19 +556,22 @@ public class TrustedNumbers {
     public static String getTrustedNameFor(String patternOrNumber) {
         if (patternOrNumber == null || patternOrNumber.isEmpty()) return null;
 
-        String normalized = normalize(patternOrNumber);
+        // Clean wildcard characters like * if present in the pattern
+        String cleanInput = patternOrNumber.replace("*", "").trim();
+        String cleaned = getCleanTurkishNumber(cleanInput);
+        if (cleaned.isEmpty()) return null;
 
         synchronized (lock) {
             if (dynamicExact != null) {
                 for (TrustedEntry entry : dynamicExact) {
-                    if (normalize(entry.numberOrPattern).equals(normalized) || entry.numberOrPattern.equals(patternOrNumber)) {
+                    if (getCleanTurkishNumber(entry.numberOrPattern).equals(cleaned)) {
                         return entry.name;
                     }
                 }
             }
             if (dynamicPrefixes != null) {
                 for (TrustedEntry entry : dynamicPrefixes) {
-                    if (normalize(entry.numberOrPattern).equals(normalized) || entry.numberOrPattern.equals(patternOrNumber)) {
+                    if (getCleanTurkishNumber(entry.numberOrPattern).equals(cleaned)) {
                         return entry.name;
                     }
                 }
@@ -577,7 +580,7 @@ public class TrustedNumbers {
 
         // Check fallback lists
         for (String exact : TRUSTED_EXACT) {
-            if (normalize(exact).equals(normalized)) {
+            if (getCleanTurkishNumber(exact).equals(cleaned)) {
                 String name = getHardcodedNameFor(exact, false);
                 if (name != null && !name.equals("Güvenli Numara")) {
                     return name;
@@ -586,7 +589,8 @@ public class TrustedNumbers {
         }
 
         for (String prefix : TRUSTED_PREFIXES) {
-            if (prefix.equals(normalized) || normalized.startsWith(prefix)) {
+            String cleanPrefix = getCleanTurkishNumber(prefix);
+            if (cleanPrefix.equals(cleaned) || cleaned.startsWith(cleanPrefix)) {
                 String name = getHardcodedNameFor(prefix, true);
                 if (name != null && !name.equals("Güvenli Numara (Ön Tanımlı)") && !name.equals("Kurumsal Hatlar")) {
                     return name;
@@ -595,6 +599,22 @@ public class TrustedNumbers {
         }
 
         return null;
+    }
+
+    /**
+     * Standardizes Turkish numbers by stripping country codes (90 / +90) and prefixing 0 for area codes.
+     */
+    public static String getCleanTurkishNumber(String number) {
+        if (number == null) return "";
+        String normalized = number.replaceAll("[^0-9]", "");
+        if (normalized.startsWith("90") && normalized.length() >= 9) {
+            String stripped = normalized.substring(2);
+            if (stripped.startsWith("5") || stripped.startsWith("8") || stripped.startsWith("2") || stripped.startsWith("3") || stripped.startsWith("4")) {
+                return "0" + stripped;
+            }
+            return stripped;
+        }
+        return normalized;
     }
 
     // ─── Helpers ──────────────────────────────────────────────────────────────
