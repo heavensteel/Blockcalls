@@ -138,5 +138,10 @@
     <string name="suggest_safe_name_hint">Kurum / Firma Adı</string>
     <string name="suggest_safe_send">Öneri Gönder</string>
     <string name="suggest_safe_email_subject">SpamBlock - Güvenli Numara Önerisi</string>
+
+    <!-- Safe lists UI -->
+    <string name="tab_blocked_rules">Engellenen Kurallar</string>
+    <string name="tab_safe_numbers">Güvenli Numaralar</string>
+    <string name="no_safe_numbers">Henüz güvenli numara listesi yüklenemedi.</string>
 </resources>
 

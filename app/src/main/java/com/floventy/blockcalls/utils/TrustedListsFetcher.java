@@ -31,7 +31,7 @@ public class TrustedListsFetcher {
     private static final long CACHE_TTL_MS = 24 * 60 * 60 * 1000L; // 24 hours
 
     public interface Callback {
-        void onSuccess(List<String> prefixes, List<String> exact);
+        void onSuccess(List<TrustedNumbers.TrustedEntry> prefixes, List<TrustedNumbers.TrustedEntry> exact);
         void onError(String message);
     }
 
@@ -152,18 +152,42 @@ public class TrustedListsFetcher {
             JSONObject root = new JSONObject(json);
             
             JSONArray prefixesJson = root.optJSONArray("prefixes");
-            List<String> prefixes = new ArrayList<>();
+            List<TrustedNumbers.TrustedEntry> prefixes = new ArrayList<>();
             if (prefixesJson != null) {
                 for (int i = 0; i < prefixesJson.length(); i++) {
-                    prefixes.add(prefixesJson.getString(i));
+                    JSONObject obj = prefixesJson.optJSONObject(i);
+                    if (obj != null) {
+                        String pattern = obj.optString("pattern");
+                        String name = obj.optString("name");
+                        if (!pattern.isEmpty()) {
+                            prefixes.add(new TrustedNumbers.TrustedEntry(pattern, name));
+                        }
+                    } else {
+                        String pattern = prefixesJson.optString(i);
+                        if (!pattern.isEmpty()) {
+                            prefixes.add(new TrustedNumbers.TrustedEntry(pattern, ""));
+                        }
+                    }
                 }
             }
 
             JSONArray exactJson = root.optJSONArray("exact");
-            List<String> exact = new ArrayList<>();
+            List<TrustedNumbers.TrustedEntry> exact = new ArrayList<>();
             if (exactJson != null) {
                 for (int i = 0; i < exactJson.length(); i++) {
-                    exact.add(exactJson.getString(i));
+                    JSONObject obj = exactJson.optJSONObject(i);
+                    if (obj != null) {
+                        String num = obj.optString("number");
+                        String name = obj.optString("name");
+                        if (!num.isEmpty()) {
+                            exact.add(new TrustedNumbers.TrustedEntry(num, name));
+                        }
+                    } else {
+                        String num = exactJson.optString(i);
+                        if (!num.isEmpty()) {
+                            exact.add(new TrustedNumbers.TrustedEntry(num, ""));
+                        }
+                    }
                 }
             }
 
@@ -175,10 +199,10 @@ public class TrustedListsFetcher {
     }
 
     public static class ParsedLists {
-        public final List<String> prefixes;
-        public final List<String> exact;
+        public final List<TrustedNumbers.TrustedEntry> prefixes;
+        public final List<TrustedNumbers.TrustedEntry> exact;
 
-        public ParsedLists(List<String> prefixes, List<String> exact) {
+        public ParsedLists(List<TrustedNumbers.TrustedEntry> prefixes, List<TrustedNumbers.TrustedEntry> exact) {
             this.prefixes = prefixes;
             this.exact = exact;
         }

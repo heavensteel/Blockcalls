@@ -138,4 +138,9 @@
     <string name="suggest_safe_name_hint">Company/Bank Name</string>
     <string name="suggest_safe_send">Send Suggestion</string>
     <string name="suggest_safe_email_subject">SpamBlock - Safe Number Suggestion</string>
+
+    <!-- Safe lists UI -->
+    <string name="tab_blocked_rules">Blocked Rules</string>
+    <string name="tab_safe_numbers">Safe Numbers</string>
+    <string name="no_safe_numbers">Safe numbers list not loaded yet.</string>
 </resources>

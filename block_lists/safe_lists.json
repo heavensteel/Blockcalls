@@ -1,221 +1,966 @@
 {
   "prefixes": [
-    "05321111111",
-    "110",
-    "112",
-    "122",
-    "144",
-    "155",
-    "156",
-    "157",
-    "158",
-    "168",
-    "170",
-    "171",
-    "174",
-    "176",
-    "177",
-    "179",
-    "181",
-    "182",
-    "183",
-    "184",
-    "185",
-    "186",
-    "187",
-    "188",
-    "189",
-    "444"
+    {
+      "pattern": "110",
+      "name": "İtfaiye"
+    },
+    {
+      "pattern": "112",
+      "name": "112 Acil Çağrı Merkezi"
+    },
+    {
+      "pattern": "114",
+      "name": "Ulusal Zehir Danışma Merkezi"
+    },
+    {
+      "pattern": "122",
+      "name": "AFAD"
+    },
+    {
+      "pattern": "126",
+      "name": "KabloNet"
+    },
+    {
+      "pattern": "144",
+      "name": "Sosyal Yardım"
+    },
+    {
+      "pattern": "150",
+      "name": "CİMER"
+    },
+    {
+      "pattern": "153",
+      "name": "İzmir Büyükşehir Belediyesi"
+    },
+    {
+      "pattern": "155",
+      "name": "Polis"
+    },
+    {
+      "pattern": "156",
+      "name": "Jandarma"
+    },
+    {
+      "pattern": "157",
+      "name": "Göç İdaresi"
+    },
+    {
+      "pattern": "158",
+      "name": "Sahil Güvenlik"
+    },
+    {
+      "pattern": "160",
+      "name": "e-Devlet Kapısı"
+    },
+    {
+      "pattern": "168",
+      "name": "Sosyal Yardım / Kızılay"
+    },
+    {
+      "pattern": "170",
+      "name": "SGK"
+    },
+    {
+      "pattern": "171",
+      "name": "Sigara Bırakma Hattı"
+    },
+    {
+      "pattern": "174",
+      "name": "Alo Gıda"
+    },
+    {
+      "pattern": "176",
+      "name": "Kültür Turizm İhbar"
+    },
+    {
+      "pattern": "177",
+      "name": "Orman Yangını"
+    },
+    {
+      "pattern": "179",
+      "name": "Valilik / Kaymakamlık"
+    },
+    {
+      "pattern": "181",
+      "name": "Çevre ve Şehircilik"
+    },
+    {
+      "pattern": "182",
+      "name": "MHRS"
+    },
+    {
+      "pattern": "183",
+      "name": "Sosyal Hizmetler ALO"
+    },
+    {
+      "pattern": "184",
+      "name": "Sağlık Danışma"
+    },
+    {
+      "pattern": "185",
+      "name": "İZSU"
+    },
+    {
+      "pattern": "186",
+      "name": "Başkent EDAŞ"
+    },
+    {
+      "pattern": "187",
+      "name": "İGDAŞ"
+    },
+    {
+      "pattern": "188",
+      "name": "Cenaze Hizmetleri"
+    },
+    {
+      "pattern": "189",
+      "name": "Gelir İdaresi Başkanlığı"
+    },
+    {
+      "pattern": "199",
+      "name": "Nüfus ve Vatandaşlık İşleri Genel Müdürlüğü"
+    },
+    {
+      "pattern": "444",
+      "name": "Kurumsal Hatlar"
+    },
+    {
+      "pattern": "500",
+      "name": "Türk Telekom"
+    },
+    {
+      "pattern": "532",
+      "name": "Turkcell"
+    },
+    {
+      "pattern": "542",
+      "name": "Vodafone Türkiye"
+    }
   ],
   "exact": [
-    "02123310200",
-    "02124142000",
-    "02124143000",
-    "02124147171",
-    "02124737373",
-    "02129096000",
-    "02164583000",
-    "03122024000",
-    "03122040000",
-    "03122929900",
-    "03123051000",
-    "03124507777",
-    "03125082000",
-    "03125526000",
-    "05320000532",
-    "05325320000",
-    "05327552222",
-    "05425420000",
-    "05425425425",
-    "08502000000",
-    "08502000666",
-    "08502000832",
-    "08502004000",
-    "08502020202",
-    "08502020400",
-    "08502110472",
-    "08502150040",
-    "08502200000",
-    "08502200100",
-    "08502220079",
-    "08502220111",
-    "08502220222",
-    "08502220333",
-    "08502220400",
-    "08502220444",
-    "08502220522",
-    "08502220600",
-    "08502220606",
-    "08502220676",
-    "08502220724",
-    "08502220735",
-    "08502220800",
-    "08502220850",
-    "08502220877",
-    "08502220900",
-    "08502220929",
-    "08502220946",
-    "08502221222",
-    "08502222244",
-    "08502222525",
-    "08502223663",
-    "08502225566",
-    "08502225666",
-    "08502226332",
-    "08502420000",
-    "08502500444",
-    "08502502525",
-    "08502524000",
-    "08502558374",
-    "08502660266",
-    "08502888080",
-    "08503330011",
-    "08503330060",
-    "08503330061",
-    "08503330333",
-    "08503330555",
-    "08503330849",
-    "08503330999",
-    "08503332538",
-    "08503440544",
-    "08504440121",
-    "08504440548",
-    "08504441444",
-    "08504441515",
-    "08504441788",
-    "08504550664",
-    "08504552727",
-    "08504750575",
-    "08505322246",
-    "08505324200",
-    "08505325050",
-    "08505327000",
-    "08507240444",
-    "08507240724",
-    "08508044444",
-    "08882281212",
-    "112",
-    "114",
-    "122",
-    "126",
-    "150",
-    "153",
-    "160",
-    "170",
-    "182",
-    "184",
-    "185",
-    "186",
-    "187",
-    "189",
-    "1890",
-    "199",
-    "4440000",
-    "4440011",
-    "44400161",
-    "4440023",
-    "4440033",
-    "4440040",
-    "4440100",
-    "4440110",
-    "4440111",
-    "4440121",
-    "4440123",
-    "4440155",
-    "4440161",
-    "4440202",
-    "4440222",
-    "4440274",
-    "4440292",
-    "4440333",
-    "4440375",
-    "4440400",
-    "4440434",
-    "4440440",
-    "4440444",
-    "4440472",
-    "4440486",
-    "4440487",
-    "4440505",
-    "4440532",
-    "4440542",
-    "4440543",
-    "4440627",
-    "4440664",
-    "4440666",
-    "4440724",
-    "4440729",
-    "4440735",
-    "4440737",
-    "4440800",
-    "4440832",
-    "4440849",
-    "4440877",
-    "4440900",
-    "4440946",
-    "4440998",
-    "4441000",
-    "4441203",
-    "4441361",
-    "4441375",
-    "4441444",
-    "4441724",
-    "4441788",
-    "4442020",
-    "4442525",
-    "4442552",
-    "4442727",
-    "4442800",
-    "4443422",
-    "4444187",
-    "4444372",
-    "4444428",
-    "4444484",
-    "4445444",
-    "4445445",
-    "4445484",
-    "4445544",
-    "4445588",
-    "4446186",
-    "4446332",
-    "4446429",
-    "4446646",
-    "4446663",
-    "4447044",
-    "4447365",
-    "4447575",
-    "4447872",
-    "4447888",
-    "4447900",
-    "4448429",
-    "4448444",
-    "4448484",
-    "4449999",
-    "4701010",
-    "4704045",
-    "4704555",
-    "500",
-    "532",
-    "542"
+    {
+      "number": "00800448829873",
+      "name": "Apple"
+    },
+    {
+      "number": "02123310200",
+      "name": "Trendyol"
+    },
+    {
+      "number": "02124142000",
+      "name": "Çapa Tıp Fakültesi Hastanesi"
+    },
+    {
+      "number": "02124143000",
+      "name": "Cerrahpaşa Tıp Fakültesi Hastanesi"
+    },
+    {
+      "number": "02124147171",
+      "name": "Bakırköy Dr. Sadi Konuk Eğitim ve Araştırma Hastanesi"
+    },
+    {
+      "number": "02124737373",
+      "name": "Digiturk"
+    },
+    {
+      "number": "02129096000",
+      "name": "Başakşehir Çam ve Sakura Şehir Hastanesi"
+    },
+    {
+      "number": "02164583000",
+      "name": "Kartal Dr. Lütfi Kırdar Şehir Hastanesi"
+    },
+    {
+      "number": "03122024000",
+      "name": "Gazi Üniversitesi Hastanesi"
+    },
+    {
+      "number": "03122040000",
+      "name": "Türkiye İhracat Kredi Bankası (Eximbank)"
+    },
+    {
+      "number": "03122929900",
+      "name": "TOBB ETÜ Hastanesi"
+    },
+    {
+      "number": "03123051000",
+      "name": "Hacettepe Üniversitesi Hastanesi"
+    },
+    {
+      "number": "03124507777",
+      "name": "Merkez Bankası"
+    },
+    {
+      "number": "03125082000",
+      "name": "Ankara Üniversitesi İbni Sina Hastanesi"
+    },
+    {
+      "number": "03125526000",
+      "name": "Ankara Bilkent Şehir Hastanesi"
+    },
+    {
+      "number": "03523366666",
+      "name": "Süha Turizm"
+    },
+    {
+      "number": "05320000532",
+      "name": "Turkcell"
+    },
+    {
+      "number": "05321111111",
+      "name": "Müşteri Hizmetleri"
+    },
+    {
+      "number": "05325320000",
+      "name": "Turkcell"
+    },
+    {
+      "number": "05327552222",
+      "name": "Turkcell"
+    },
+    {
+      "number": "05425420000",
+      "name": "Vodafone Türkiye"
+    },
+    {
+      "number": "05425425425",
+      "name": "Vodafone Türkiye"
+    },
+    {
+      "number": "08502000000",
+      "name": "Türkiye Hastaneleri"
+    },
+    {
+      "number": "08502000666",
+      "name": "TEB"
+    },
+    {
+      "number": "08502000832",
+      "name": "TEB (Türk Ekonomi Bankası)"
+    },
+    {
+      "number": "08502004000",
+      "name": "Migros"
+    },
+    {
+      "number": "08502020202",
+      "name": "Sürat Kargo"
+    },
+    {
+      "number": "08502020400",
+      "name": "Boyner"
+    },
+    {
+      "number": "08502100888",
+      "name": "Altus"
+    },
+    {
+      "number": "08502110472",
+      "name": "HSBC Türkiye"
+    },
+    {
+      "number": "08502150040",
+      "name": "DHL Türkiye"
+    },
+    {
+      "number": "08502200000",
+      "name": "Ziraat Bankası"
+    },
+    {
+      "number": "08502200100",
+      "name": "Ziraat Bankası"
+    },
+    {
+      "number": "08502214444",
+      "name": "Ulusoy Turizm"
+    },
+    {
+      "number": "08502220079",
+      "name": "ÇiçekSepeti"
+    },
+    {
+      "number": "08502220111",
+      "name": "QNB Finansbank"
+    },
+    {
+      "number": "08502220222",
+      "name": "Superonline"
+    },
+    {
+      "number": "08502220333",
+      "name": "Garanti BBVA"
+    },
+    {
+      "number": "08502220400",
+      "name": "Halkbank"
+    },
+    {
+      "number": "08502220444",
+      "name": "Yapı Kredi"
+    },
+    {
+      "number": "08502220522",
+      "name": "LC Waikiki"
+    },
+    {
+      "number": "08502220600",
+      "name": "ING Türkiye"
+    },
+    {
+      "number": "08502220606",
+      "name": "MNG Kargo"
+    },
+    {
+      "number": "08502220676",
+      "name": "Morhipo"
+    },
+    {
+      "number": "08502220724",
+      "name": "VakıfBank"
+    },
+    {
+      "number": "08502220735",
+      "name": "Şekerbank"
+    },
+    {
+      "number": "08502220800",
+      "name": "DenizBank"
+    },
+    {
+      "number": "08502220850",
+      "name": "Netgsm"
+    },
+    {
+      "number": "08502220877",
+      "name": "UPS Türkiye"
+    },
+    {
+      "number": "08502220900",
+      "name": "QNB"
+    },
+    {
+      "number": "08502220929",
+      "name": "CEPTETEB"
+    },
+    {
+      "number": "08502220946",
+      "name": "ING Bank"
+    },
+    {
+      "number": "08502221222",
+      "name": "Superonline"
+    },
+    {
+      "number": "08502222244",
+      "name": "Türkiye Finans"
+    },
+    {
+      "number": "08502222525",
+      "name": "Akbank"
+    },
+    {
+      "number": "08502223400",
+      "name": "Has Turizm"
+    },
+    {
+      "number": "08502223455",
+      "name": "Metro Turizm"
+    },
+    {
+      "number": "08502223663",
+      "name": "Enpara"
+    },
+    {
+      "number": "08502224030",
+      "name": "Hoover"
+    },
+    {
+      "number": "08502224123",
+      "name": "Regal"
+    },
+    {
+      "number": "08502225566",
+      "name": "SunExpress"
+    },
+    {
+      "number": "08502225666",
+      "name": "Albaraka Türk"
+    },
+    {
+      "number": "08502226332",
+      "name": "Odeabank"
+    },
+    {
+      "number": "08502227445",
+      "name": "Philips"
+    },
+    {
+      "number": "08502228034",
+      "name": "Varan Turizm"
+    },
+    {
+      "number": "08502420000",
+      "name": "Vodafone"
+    },
+    {
+      "number": "08502500444",
+      "name": "Yapı Kredi"
+    },
+    {
+      "number": "08502502525",
+      "name": "Akbank"
+    },
+    {
+      "number": "08502503589",
+      "name": "Electrolux"
+    },
+    {
+      "number": "08502524000",
+      "name": "Hepsiburada"
+    },
+    {
+      "number": "08502558374",
+      "name": "Getir"
+    },
+    {
+      "number": "08502660266",
+      "name": "D-Smart"
+    },
+    {
+      "number": "08502888080",
+      "name": "TurkNet"
+    },
+    {
+      "number": "08503002020",
+      "name": "Kontur Turizm"
+    },
+    {
+      "number": "08503080007",
+      "name": "Xiaomi"
+    },
+    {
+      "number": "08503330011",
+      "name": "n11"
+    },
+    {
+      "number": "08503330060",
+      "name": "BEDAŞ (İstanbul Avrupa elektrik)"
+    },
+    {
+      "number": "08503330061",
+      "name": "AYEDAŞ (İstanbul Anadolu elektrik)"
+    },
+    {
+      "number": "08503330333",
+      "name": "Millenicom"
+    },
+    {
+      "number": "08503330555",
+      "name": "Trendyol"
+    },
+    {
+      "number": "08503330849",
+      "name": "Türk Hava Yolları"
+    },
+    {
+      "number": "08503330999",
+      "name": "Yurtiçi Kargo"
+    },
+    {
+      "number": "08503332538",
+      "name": "AJet"
+    },
+    {
+      "number": "08503333535",
+      "name": "Pamukkale Turizm"
+    },
+    {
+      "number": "08503440544",
+      "name": "Sürat Kargo"
+    },
+    {
+      "number": "08504440121",
+      "name": "Türk Telekom"
+    },
+    {
+      "number": "08504440548",
+      "name": "Liv Hospital"
+    },
+    {
+      "number": "08504441444",
+      "name": "Yemeksepeti"
+    },
+    {
+      "number": "08504441515",
+      "name": "Çiçeksepeti"
+    },
+    {
+      "number": "08504441788",
+      "name": "PTT Kargo"
+    },
+    {
+      "number": "08504550664",
+      "name": "MNG Kargo"
+    },
+    {
+      "number": "08504552727",
+      "name": "Aras Kargo"
+    },
+    {
+      "number": "08504750575",
+      "name": "İŞKUR"
+    },
+    {
+      "number": "08505321144",
+      "name": "Dyson"
+    },
+    {
+      "number": "08505322246",
+      "name": "Cainiao / Aliexpress Türkiye"
+    },
+    {
+      "number": "08505324200",
+      "name": "n11"
+    },
+    {
+      "number": "08505325050",
+      "name": "Getir"
+    },
+    {
+      "number": "08505327000",
+      "name": "Amazon Türkiye"
+    },
+    {
+      "number": "08506003434",
+      "name": "Efe Tur"
+    },
+    {
+      "number": "08507240444",
+      "name": "İş Bankası"
+    },
+    {
+      "number": "08507240724",
+      "name": "Türkiye İş Bankası"
+    },
+    {
+      "number": "08507553333",
+      "name": "Seç Turizm"
+    },
+    {
+      "number": "08508044444",
+      "name": "Türksat"
+    },
+    {
+      "number": "08508880032",
+      "name": "Isparta Petrol Turizm"
+    },
+    {
+      "number": "08508882400",
+      "name": "Vib Turizm"
+    },
+    {
+      "number": "08508883434",
+      "name": "Lüks Aksel Seyahat"
+    },
+    {
+      "number": "08882281212",
+      "name": "Pegasus Airlines"
+    },
+    {
+      "number": "153",
+      "name": "Belediye Hizmet Hattı"
+    },
+    {
+      "number": "185",
+      "name": "Su Kesintisi İhbar"
+    },
+    {
+      "number": "1890",
+      "name": "Vergi Dairesi ALO"
+    },
+    {
+      "number": "4440000",
+      "name": "Ziraat Bankası"
+    },
+    {
+      "number": "4440011",
+      "name": "Borusan Lojistik"
+    },
+    {
+      "number": "44400161",
+      "name": "Memorial Hastaneleri"
+    },
+    {
+      "number": "4440023",
+      "name": "İGDAŞ (İstanbul Gaz)"
+    },
+    {
+      "number": "4440033",
+      "name": "BAŞKENTGAZ"
+    },
+    {
+      "number": "4440040",
+      "name": "DHL Türkiye"
+    },
+    {
+      "number": "4440100",
+      "name": "Ziraat Bankası"
+    },
+    {
+      "number": "4440110",
+      "name": "BOTAŞ"
+    },
+    {
+      "number": "4440111",
+      "name": "QNB Finansbank"
+    },
+    {
+      "number": "4440121",
+      "name": "Türk Telekom"
+    },
+    {
+      "number": "4440123",
+      "name": "Kuveyt Türk"
+    },
+    {
+      "number": "4440155",
+      "name": "Acıbadem Hastaneleri"
+    },
+    {
+      "number": "4440161",
+      "name": "Memorial Hastaneleri"
+    },
+    {
+      "number": "4440202",
+      "name": "Türkiye İş Bankası"
+    },
+    {
+      "number": "4440222",
+      "name": "Medicana"
+    },
+    {
+      "number": "4440241",
+      "name": "Fakir"
+    },
+    {
+      "number": "4440274",
+      "name": "Anadolu Sigorta"
+    },
+    {
+      "number": "4440292",
+      "name": "AXA Sigorta"
+    },
+    {
+      "number": "4440333",
+      "name": "Garanti BBVA"
+    },
+    {
+      "number": "4440375",
+      "name": "TTNET"
+    },
+    {
+      "number": "4440400",
+      "name": "Halkbank"
+    },
+    {
+      "number": "4440434",
+      "name": "HDI Sigorta"
+    },
+    {
+      "number": "4440440",
+      "name": "Sompo Sigorta"
+    },
+    {
+      "number": "4440444",
+      "name": "Yapı Kredi"
+    },
+    {
+      "number": "4440472",
+      "name": "HSBC Türkiye"
+    },
+    {
+      "number": "4440486",
+      "name": "Güneş Sigorta"
+    },
+    {
+      "number": "4440487",
+      "name": "AnadoluJet"
+    },
+    {
+      "number": "4440505",
+      "name": "Migros Sanal Market"
+    },
+    {
+      "number": "4440532",
+      "name": "Turkcell"
+    },
+    {
+      "number": "4440542",
+      "name": "Vodafone"
+    },
+    {
+      "number": "4440543",
+      "name": "Sendeo"
+    },
+    {
+      "number": "4440562",
+      "name": "Kamil Koç"
+    },
+    {
+      "number": "4440627",
+      "name": "Mapfre Sigorta"
+    },
+    {
+      "number": "4440664",
+      "name": "MNG Kargo"
+    },
+    {
+      "number": "4440666",
+      "name": "TEB"
+    },
+    {
+      "number": "4440724",
+      "name": "VakıfBank"
+    },
+    {
+      "number": "4440729",
+      "name": "Ray Sigorta"
+    },
+    {
+      "number": "4440735",
+      "name": "Şekerbank"
+    },
+    {
+      "number": "4440737",
+      "name": "Pegasus"
+    },
+    {
+      "number": "4440800",
+      "name": "DenizBank"
+    },
+    {
+      "number": "4440832",
+      "name": "TEB (Türk Ekonomi Bankası)"
+    },
+    {
+      "number": "4440849",
+      "name": "Türk Hava Yolları (THY)"
+    },
+    {
+      "number": "4440877",
+      "name": "UPS Türkiye"
+    },
+    {
+      "number": "4440900",
+      "name": "QNB"
+    },
+    {
+      "number": "4440946",
+      "name": "ING Bank"
+    },
+    {
+      "number": "4440998",
+      "name": "Zurich Sigorta"
+    },
+    {
+      "number": "4441000",
+      "name": "CarrefourSA"
+    },
+    {
+      "number": "4441203",
+      "name": "Ziraat Katılım"
+    },
+    {
+      "number": "4441361",
+      "name": "Emlak Katılım"
+    },
+    {
+      "number": "4441375",
+      "name": "TTNET"
+    },
+    {
+      "number": "4441444",
+      "name": "Türk Telekom"
+    },
+    {
+      "number": "4441601",
+      "name": "Balıkesir Uludağ Turizm"
+    },
+    {
+      "number": "4441724",
+      "name": "Vakıf Katılım"
+    },
+    {
+      "number": "4441788",
+      "name": "PTT Kargo"
+    },
+    {
+      "number": "4442020",
+      "name": "TEDAŞ"
+    },
+    {
+      "number": "4442525",
+      "name": "Akbank"
+    },
+    {
+      "number": "4442552",
+      "name": "Aras Kargo"
+    },
+    {
+      "number": "4442727",
+      "name": "Aras Kargo"
+    },
+    {
+      "number": "4442800",
+      "name": "Burgan Bank"
+    },
+    {
+      "number": "4443422",
+      "name": "Fibabanka"
+    },
+    {
+      "number": "4444050",
+      "name": "Tefal"
+    },
+    {
+      "number": "4444187",
+      "name": "Aksa Doğalgaz"
+    },
+    {
+      "number": "4444372",
+      "name": "Enerjisa"
+    },
+    {
+      "number": "4444428",
+      "name": "AGT Kargo"
+    },
+    {
+      "number": "4444484",
+      "name": "Medical Park Ankara Hastanesi"
+    },
+    {
+      "number": "4445272",
+      "name": "Karaca"
+    },
+    {
+      "number": "4445444",
+      "name": "Türk Telekom"
+    },
+    {
+      "number": "4445445",
+      "name": "Yemeksepeti"
+    },
+    {
+      "number": "4445484",
+      "name": "Liv Hospital"
+    },
+    {
+      "number": "4445544",
+      "name": "Acıbadem Hastaneleri"
+    },
+    {
+      "number": "4445588",
+      "name": "Aktif Bank"
+    },
+    {
+      "number": "4445657",
+      "name": "Korkmaz"
+    },
+    {
+      "number": "4446186",
+      "name": "CK Enerji"
+    },
+    {
+      "number": "4446332",
+      "name": "Odeabank"
+    },
+    {
+      "number": "4446333",
+      "name": "Bosch"
+    },
+    {
+      "number": "4446429",
+      "name": "Başkentgaz"
+    },
+    {
+      "number": "4446543",
+      "name": "LG"
+    },
+    {
+      "number": "4446646",
+      "name": "Uludağ Elektrik"
+    },
+    {
+      "number": "4446663",
+      "name": "Albaraka Türk"
+    },
+    {
+      "number": "4446688",
+      "name": "Siemens"
+    },
+    {
+      "number": "4447044",
+      "name": "Medipol Hastaneleri"
+    },
+    {
+      "number": "4447365",
+      "name": "Türkiye Finans (Katılım)"
+    },
+    {
+      "number": "4447575",
+      "name": "Türkiye Sigorta"
+    },
+    {
+      "number": "4447711",
+      "name": "Samsung"
+    },
+    {
+      "number": "4447766",
+      "name": "Profilo"
+    },
+    {
+      "number": "4447872",
+      "name": "Sürat Kargo"
+    },
+    {
+      "number": "4447888",
+      "name": "Memorial Ankara Hastanesi"
+    },
+    {
+      "number": "4447900",
+      "name": "Alternatifbank"
+    },
+    {
+      "number": "4448429",
+      "name": "Enerya"
+    },
+    {
+      "number": "4448444",
+      "name": "Yapı Kredi"
+    },
+    {
+      "number": "4448484",
+      "name": "GittiGidiyor"
+    },
+    {
+      "number": "4449999",
+      "name": "Yurtiçi Kargo"
+    },
+    {
+      "number": "4701010",
+      "name": "SGK (Sosyal Güvenlik Kurumu)"
+    },
+    {
+      "number": "4704045",
+      "name": "Emniyet Müdürlüğü"
+    },
+    {
+      "number": "4704555",
+      "name": "E-devlet Yardım"
+    },
+    {
+      "number": "532",
+      "name": "Turkcell"
+    }
   ]
 }

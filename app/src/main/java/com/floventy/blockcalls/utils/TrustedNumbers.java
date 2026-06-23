@@ -22,8 +22,18 @@ import java.util.List;
  */
 public class TrustedNumbers {
 
-    private static List<String> dynamicPrefixes = new ArrayList<>();
-    private static List<String> dynamicExact = new ArrayList<>();
+    public static class TrustedEntry {
+        public final String numberOrPattern;
+        public final String name;
+
+        public TrustedEntry(String numberOrPattern, String name) {
+            this.numberOrPattern = numberOrPattern;
+            this.name = name;
+        }
+    }
+
+    private static List<TrustedEntry> dynamicPrefixes = new ArrayList<>();
+    private static List<TrustedEntry> dynamicExact = new ArrayList<>();
     private static final Object lock = new Object();
 
 
@@ -320,19 +330,44 @@ public class TrustedNumbers {
                     br.close();
 
                     org.json.JSONObject root = new org.json.JSONObject(sb.toString());
+                    
                     org.json.JSONArray prefixesJson = root.optJSONArray("prefixes");
-                    List<String> prefixes = new ArrayList<>();
+                    List<TrustedEntry> prefixes = new ArrayList<>();
                     if (prefixesJson != null) {
                         for (int i = 0; i < prefixesJson.length(); i++) {
-                            prefixes.add(prefixesJson.getString(i));
+                            org.json.JSONObject obj = prefixesJson.optJSONObject(i);
+                            if (obj != null) {
+                                String pattern = obj.optString("pattern");
+                                String name = obj.optString("name");
+                                if (!pattern.isEmpty()) {
+                                    prefixes.add(new TrustedEntry(pattern, name));
+                                }
+                            } else {
+                                String pattern = prefixesJson.optString(i);
+                                if (!pattern.isEmpty()) {
+                                    prefixes.add(new TrustedEntry(pattern, getHardcodedNameFor(pattern, true)));
+                                }
+                            }
                         }
                     }
 
                     org.json.JSONArray exactJson = root.optJSONArray("exact");
-                    List<String> exact = new ArrayList<>();
+                    List<TrustedEntry> exact = new ArrayList<>();
                     if (exactJson != null) {
                         for (int i = 0; i < exactJson.length(); i++) {
-                            exact.add(exactJson.getString(i));
+                            org.json.JSONObject obj = exactJson.optJSONObject(i);
+                            if (obj != null) {
+                                String num = obj.optString("number");
+                                String name = obj.optString("name");
+                                if (!num.isEmpty()) {
+                                    exact.add(new TrustedEntry(num, name));
+                                }
+                            } else {
+                                String num = exactJson.optString(i);
+                                if (!num.isEmpty()) {
+                                    exact.add(new TrustedEntry(num, getHardcodedNameFor(num, false)));
+                                }
+                            }
                         }
                     }
 
@@ -349,7 +384,7 @@ public class TrustedNumbers {
     /**
      * Sets the dynamic whitelists in RAM. Called after successful download.
      */
-    public static void setDynamicLists(List<String> prefixes, List<String> exact) {
+    public static void setDynamicLists(List<TrustedEntry> prefixes, List<TrustedEntry> exact) {
         synchronized (lock) {
             dynamicPrefixes = prefixes != null ? prefixes : new ArrayList<>();
             dynamicExact = exact != null ? exact : new ArrayList<>();
@@ -373,14 +408,14 @@ public class TrustedNumbers {
         synchronized (lock) {
             // Check dynamic prefix list
             if (dynamicPrefixes != null) {
-                for (String prefix : dynamicPrefixes) {
-                    if (normalized.startsWith(normalize(prefix))) return true;
+                for (TrustedEntry entry : dynamicPrefixes) {
+                    if (normalized.startsWith(normalize(entry.numberOrPattern))) return true;
                 }
             }
             // Check dynamic exact list
             if (dynamicExact != null) {
-                for (String trusted : dynamicExact) {
-                    if (normalized.equals(normalize(trusted))) return true;
+                for (TrustedEntry entry : dynamicExact) {
+                    if (normalized.equals(normalize(entry.numberOrPattern))) return true;
                 }
             }
         }
@@ -401,13 +436,13 @@ public class TrustedNumbers {
         if (!stripped.equals(normalized)) {
             synchronized (lock) {
                 if (dynamicPrefixes != null) {
-                    for (String prefix : dynamicPrefixes) {
-                        if (stripped.startsWith(normalize(prefix))) return true;
+                    for (TrustedEntry entry : dynamicPrefixes) {
+                        if (stripped.startsWith(normalize(entry.numberOrPattern))) return true;
                     }
                 }
                 if (dynamicExact != null) {
-                    for (String trusted : dynamicExact) {
-                        if (stripped.equals(normalize(trusted))) return true;
+                    for (TrustedEntry entry : dynamicExact) {
+                        if (stripped.equals(normalize(entry.numberOrPattern))) return true;
                     }
                 }
             }
@@ -420,6 +455,99 @@ public class TrustedNumbers {
         }
 
         return false;
+    }
+
+    /**
+     * Returns a combined list of all trusted entries (dynamic downloaded list + local hardcoded fallbacks).
+     */
+    public static List<TrustedEntry> getAllTrustedEntries() {
+        List<TrustedEntry> list = new ArrayList<>();
+        synchronized (lock) {
+            if (dynamicPrefixes != null && !dynamicPrefixes.isEmpty()) {
+                list.addAll(dynamicPrefixes);
+            }
+            if (dynamicExact != null && !dynamicExact.isEmpty()) {
+                list.addAll(dynamicExact);
+            }
+        }
+
+        // If the dynamic list is empty, populate from hardcoded lists
+        if (list.isEmpty()) {
+            for (String prefix : TRUSTED_PREFIXES) {
+                list.add(new TrustedEntry(prefix, getHardcodedNameFor(prefix, true)));
+            }
+            for (String exact : TRUSTED_EXACT) {
+                list.add(new TrustedEntry(exact, getHardcodedNameFor(exact, false)));
+            }
+        }
+        return list;
+    }
+
+    private static String getHardcodedNameFor(String number, boolean isPrefix) {
+        if (isPrefix) {
+            switch (number) {
+                case "444": return "Kurumsal Hatlar";
+                case "110": return "İtfaiye";
+                case "112": return "Acil Çağrı Merkezi";
+                case "122": return "AFAD";
+                case "144": return "Sosyal Yardım";
+                case "155": return "Polis İmdat";
+                case "156": return "Jandarma İmdat";
+                case "157": return "Göç İdaresi";
+                case "158": return "Sahil Güvenlik";
+                case "168": return "Sosyal Yardım / Kızılay";
+                case "171": return "Sigara Bırakma Hattı";
+                case "174": return "Alo Gıda";
+                case "176": return "Kültür Turizm İhbar";
+                case "177": return "Orman Yangın İhbar";
+                case "179": return "Valilik / Kaymakamlık";
+                case "181": return "Çevre ve Şehircilik";
+                case "182": return "MHRS Hastane Randevu";
+                case "183": return "Sosyal Hizmetler ALO";
+                case "184": return "Sağlık İhbar Hattı";
+                case "185": return "Belediye Su Arıza";
+                case "186": return "Elektrik Arıza";
+                case "187": return "Doğalgaz Arıza";
+                case "188": return "Cenaze Hizevleri";
+                case "189": return "Vergi Danışma";
+                case "170": return "PTT / SGK Danışma";
+                case "05321111111": return "Müşteri Hizmetleri";
+                default: return "Güvenli Numara (Ön Tanımlı)";
+            }
+        } else {
+            if (number.equals("4440100") || number.equals("08502200100")) return "Ziraat Bankası";
+            if (number.equals("4440400") || number.equals("08502220400")) return "Halkbank";
+            if (number.equals("4440724") || number.equals("08502220724")) return "VakıfBank";
+            if (number.equals("4440333") || number.equals("08502220333")) return "Garanti BBVA";
+            if (number.equals("4440444") || number.equals("08507240444")) return "İş Bankası";
+            if (number.equals("4448444") || number.equals("08502500444")) return "Yapı Kredi";
+            if (number.equals("4442525") || number.equals("08502502525")) return "Akbank";
+            if (number.equals("4440800") || number.equals("08502220800")) return "DenizBank";
+            if (number.equals("4440832") || number.equals("08502000832")) return "TEB (Türk Ekonomi Bankası)";
+            if (number.equals("4440111") || number.equals("08502220111")) return "QNB Finansbank";
+            if (number.equals("4440946") || number.equals("08502220946")) return "ING Bank";
+            if (number.equals("4440472") || number.equals("08502110472")) return "HSBC Türkiye";
+            if (number.equals("4440735") || number.equals("08502220735")) return "Şekerbank";
+            
+            if (number.equals("4449999") || number.equals("08503330999")) return "Yurtiçi Kargo";
+            if (number.equals("4441788") || number.equals("08504441788")) return "PTT Kargo";
+            if (number.equals("4442727") || number.equals("08504552727") || number.equals("4442552")) return "Aras Kargo";
+            if (number.equals("4440664") || number.equals("08504550664") || number.equals("08502220606")) return "MNG Kargo";
+            if (number.equals("4447872") || number.equals("08503440544") || number.equals("08502020202")) return "Sürat Kargo";
+            
+            if (number.equals("532") || number.equals("05320000532") || number.equals("4440532") || number.equals("05325320000") || number.equals("05327552222")) return "Turkcell";
+            if (number.equals("542") || number.equals("4440542") || number.equals("08502420000") || number.equals("05425420000") || number.equals("05425425425")) return "Vodafone";
+            if (number.equals("4440121") || number.equals("08504440121") || number.equals("4441444") || number.equals("500") || number.equals("4445444") || number.equals("4440375") || number.equals("4441375")) return "Türk Telekom";
+            if (number.equals("08503330555") || number.equals("02123310200")) return "Trendyol";
+            if (number.equals("08502524000")) return "Hepsiburada";
+            if (number.equals("08505324200") || number.equals("08503330011")) return "n11";
+            if (number.equals("08505327000")) return "Amazon Türkiye";
+            if (number.equals("08502558374") || number.equals("08505325050")) return "Getir";
+            if (number.equals("08504441444") || number.equals("4445445")) return "Yemeksepeti";
+            if (number.equals("4440505") || number.equals("08502004000")) return "Migros";
+            
+            return "Güvenli Numara";
+        }
     }
 
     // ─── Helpers ──────────────────────────────────────────────────────────────

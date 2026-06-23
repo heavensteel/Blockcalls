@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         // Fetch dynamic Whitelist from GitHub
         new com.floventy.blockcalls.utils.TrustedListsFetcher().fetch(this, new com.floventy.blockcalls.utils.TrustedListsFetcher.Callback() {
             @Override
-            public void onSuccess(java.util.List<String> prefixes, java.util.List<String> exact) {
+            public void onSuccess(java.util.List<com.floventy.blockcalls.utils.TrustedNumbers.TrustedEntry> prefixes, java.util.List<com.floventy.blockcalls.utils.TrustedNumbers.TrustedEntry> exact) {
                 com.floventy.blockcalls.utils.TrustedNumbers.setDynamicLists(prefixes, exact);
             }
 

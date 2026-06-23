@@ -33,8 +33,15 @@ public class RulesFragment extends Fragment {
 
     private MainViewModel viewModel;
     private BlockedNumberAdapter adapter;
+    private TrustedNumberAdapter trustedAdapter;
     private View emptyState;
     private RecyclerView recyclerView;
+    private com.google.android.material.tabs.TabLayout tabLayout;
+    private ItemTouchHelper itemTouchHelper;
+
+    private android.widget.ImageView emptyStateIcon;
+    private TextView emptyStateTitle;
+    private TextView emptyStateDesc;
 
     @Nullable
     @Override
@@ -48,13 +55,37 @@ public class RulesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         emptyState = view.findViewById(R.id.emptyState);
+        emptyStateIcon = view.findViewById(R.id.emptyStateIcon);
+        emptyStateTitle = view.findViewById(R.id.emptyStateTitle);
+        emptyStateDesc = view.findViewById(R.id.emptyStateDesc);
         recyclerView = view.findViewById(R.id.recyclerView);
+        tabLayout = view.findViewById(R.id.tabLayout);
         FloatingActionButton fabAdd = view.findViewById(R.id.fabAdd);
         FloatingActionButton fabBlockLists = view.findViewById(R.id.fabBlockLists);
 
         adapter = new BlockedNumberAdapter();
+        trustedAdapter = new TrustedNumberAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(adapter);
+
+        // Setup swipe-to-delete helper (doesn't attach yet)
+        setupSwipeToDelete();
+
+        // Setup TabLayout
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_blocked_rules));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_safe_numbers));
+
+        tabLayout.addOnTabSelectedListener(new com.google.android.material.tabs.TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(com.google.android.material.tabs.TabLayout.Tab tab) {
+                switchTab(tab.getPosition(), fabAdd, fabBlockLists);
+            }
+
+            @Override
+            public void onTabUnselected(com.google.android.material.tabs.TabLayout.Tab tab) {}
+
+            @Override
+            public void onTabReselected(com.google.android.material.tabs.TabLayout.Tab tab) {}
+        });
 
         adapter.setOnItemClickListener(new BlockedNumberAdapter.OnItemClickListener() {
             @Override
@@ -73,19 +104,16 @@ public class RulesFragment extends Fragment {
             }
         });
 
-        setupSwipeToDelete();
-
         viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         viewModel.getAllBlockedNumbers().observe(getViewLifecycleOwner(), blockedNumbers -> {
-            adapter.submitList(blockedNumbers);
-            if (blockedNumbers == null || blockedNumbers.isEmpty()) {
-                emptyState.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
-            } else {
-                emptyState.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+            if (tabLayout.getSelectedTabPosition() == 0) {
+                adapter.submitList(blockedNumbers);
+                updateBlockedEmptyState(blockedNumbers == null || blockedNumbers.isEmpty());
             }
         });
+
+        // Initialize with default Tab 0
+        switchTab(0, fabAdd, fabBlockLists);
 
         fabAdd.setOnClickListener(v -> showAddPatternDialog());
         fabBlockLists.setOnClickListener(v -> {
@@ -93,6 +121,62 @@ public class RulesFragment extends Fragment {
                     requireContext(), BlockListsActivity.class);
             startActivity(intent);
         });
+    }
+
+    private void switchTab(int position, FloatingActionButton fabAdd, FloatingActionButton fabBlockLists) {
+        if (position == 0) {
+            // Blocked Rules
+            recyclerView.setAdapter(adapter);
+            if (itemTouchHelper != null) {
+                itemTouchHelper.attachToRecyclerView(recyclerView);
+            }
+            fabAdd.show();
+            fabBlockLists.show();
+            
+            java.util.List<BlockedNumber> current = viewModel.getAllBlockedNumbers().getValue();
+            adapter.submitList(current);
+            updateBlockedEmptyState(current == null || current.isEmpty());
+        } else {
+            // Safe Numbers
+            recyclerView.setAdapter(trustedAdapter);
+            if (itemTouchHelper != null) {
+                itemTouchHelper.attachToRecyclerView(null);
+            }
+            fabAdd.hide();
+            fabBlockLists.hide();
+
+            java.util.List<com.floventy.blockcalls.utils.TrustedNumbers.TrustedEntry> safeList = 
+                    com.floventy.blockcalls.utils.TrustedNumbers.getAllTrustedEntries();
+            trustedAdapter.submitList(safeList);
+            updateSafeEmptyState(safeList == null || safeList.isEmpty());
+        }
+    }
+
+    private void updateBlockedEmptyState(boolean isEmpty) {
+        if (isEmpty) {
+            emptyStateIcon.setImageResource(android.R.drawable.ic_menu_call);
+            emptyStateTitle.setText(R.string.no_blocked_numbers);
+            emptyStateDesc.setText(R.string.add_pattern_hint);
+            emptyStateDesc.setVisibility(View.VISIBLE);
+            emptyState.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            emptyState.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void updateSafeEmptyState(boolean isEmpty) {
+        if (isEmpty) {
+            emptyStateIcon.setImageResource(android.R.drawable.ic_lock_power_off);
+            emptyStateTitle.setText(R.string.no_safe_numbers);
+            emptyStateDesc.setVisibility(View.GONE);
+            emptyState.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            emptyState.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void showPopupMenu(BlockedNumber blockedNumber, View anchor) {
@@ -118,13 +202,12 @@ public class RulesFragment extends Fragment {
         TextInputEditText editCountryCode = dialogView.findViewById(R.id.editCountryCode);
         TextInputEditText editPattern = dialogView.findViewById(R.id.editPattern);
 
-        // Auto-fill country code from SIM card
         String userCountry = CountryCodeHelper.getUserCountryCode(requireContext());
         CountryCodeHelper.CountryCode detectedCountry = CountryCodeHelper.findCountryByCode(userCountry);
         if (detectedCountry != null) {
             editCountryCode.setText("+" + detectedCountry.dialCode);
         } else {
-            editCountryCode.setText("+90"); // Default to Turkey
+            editCountryCode.setText("+90");
         }
 
         AlertDialog dialog = new AlertDialog.Builder(requireContext())
@@ -146,11 +229,6 @@ public class RulesFragment extends Fragment {
                 return;
             }
 
-            // When a country code is provided, strip the leading "0" from the local
-            // pattern.
-            // e.g. "+90" + "0850*" → "+90850*" (not "+900850*")
-            // In Turkey (and most countries) the local leading 0 is dropped in
-            // international format.
             String localPattern = (!countryCode.isEmpty() && pattern.startsWith("0"))
                     ? pattern.substring(1)
                     : pattern;
@@ -174,21 +252,17 @@ public class RulesFragment extends Fragment {
         TextInputEditText editCountryCode = dialogView.findViewById(R.id.editCountryCode);
         TextInputEditText editPattern = dialogView.findViewById(R.id.editPattern);
 
-        // Split existing pattern into country code + rest
         String existingPattern = blockedNumber.getPattern();
         if (existingPattern.startsWith("+")) {
-            // Try to extract dial code
             String dialCode = CountryCodeHelper.extractDialCodeFromPattern(existingPattern);
             if (dialCode != null) {
                 editCountryCode.setText("+" + dialCode);
                 editPattern.setText(existingPattern.substring(dialCode.length() + 1));
             } else {
-                // Keep + sign in country code field, rest in pattern
                 editCountryCode.setText("+");
                 editPattern.setText(existingPattern.substring(1));
             }
         } else {
-            // No country code - clear the field
             editCountryCode.setText("");
             editPattern.setText(existingPattern);
         }
@@ -217,9 +291,6 @@ public class RulesFragment extends Fragment {
                 return;
             }
 
-            // When a country code is provided, strip the leading "0" from the local
-            // pattern.
-            // e.g. "+90" + "0850*" → "+90850*" (not "+900850*")
             String localPattern = (!countryCode.isEmpty() && pattern.startsWith("0"))
                     ? pattern.substring(1)
                     : pattern;
@@ -275,6 +346,6 @@ public class RulesFragment extends Fragment {
             }
         };
 
-        new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
+        itemTouchHelper = new ItemTouchHelper(simpleCallback);
     }
 }
