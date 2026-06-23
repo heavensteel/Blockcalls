@@ -17,6 +17,7 @@ public class BlockedNumber {
     private boolean isWildcard;
     private long dateAdded;
     private boolean isEnabled;
+    private String note;
     
     public BlockedNumber(String pattern, boolean isWildcard, long dateAdded) {
         this.pattern = pattern;
@@ -64,5 +65,13 @@ public class BlockedNumber {
     
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

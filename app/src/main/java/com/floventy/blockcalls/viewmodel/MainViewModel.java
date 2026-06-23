@@ -38,6 +38,10 @@ public class MainViewModel extends AndroidViewModel {
     }
     
     public void addBlockedNumber(String pattern) {
+        addBlockedNumber(pattern, null);
+    }
+    
+    public void addBlockedNumber(String pattern, String note) {
         executorService.execute(() -> {
             boolean isWildcard = PatternMatcher.isWildcardPattern(pattern);
             BlockedNumber blockedNumber = new BlockedNumber(
@@ -45,6 +49,13 @@ public class MainViewModel extends AndroidViewModel {
                 isWildcard,
                 System.currentTimeMillis()
             );
+            blockedNumber.setNote(note);
+            blockedNumberDao.insert(blockedNumber);
+        });
+    }
+
+    public void addBlockedNumber(BlockedNumber blockedNumber) {
+        executorService.execute(() -> {
             blockedNumberDao.insert(blockedNumber);
         });
     }

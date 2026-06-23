@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.Executors;
@@ -14,9 +15,16 @@ import java.util.concurrent.Executors;
  * Room database for the BlockCalls application.
  * Contains blocked numbers and blocked call logs.
  */
-@Database(entities = {BlockedNumber.class, BlockedCall.class}, version = 2, exportSchema = false)
+@Database(entities = {BlockedNumber.class, BlockedCall.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     
+    public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE blocked_numbers ADD COLUMN note TEXT");
+        }
+    };
+
     private static AppDatabase instance;
     
     public abstract BlockedNumberDao blockedNumberDao();
@@ -34,6 +42,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 AppDatabase.class,
                 "block_calls_db"
             )
+            .addMigrations(MIGRATION_2_3)
             .fallbackToDestructiveMigration()
             .addCallback(new RoomDatabase.Callback() {
                 @Override

@@ -17,6 +17,7 @@
     <string name="select_country_to_block">Select Country</string>
     <string name="country_code_hint">+90</string>
     <string name="pattern_hint">0850*</string>
+    <string name="note_hint">Note / Name (Optional)</string>
     <string name="pattern_help">Tip: * matches any digits. Country code is optional.\n• +90 | 0850* → blocks 0850 starting numbers from Turkey\n• +90 | * → blocks ALL Turkey (+90) calls\n• +44 | * → blocks ALL UK calls\n• (empty) | *0850* → blocks any number containing 0850</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>

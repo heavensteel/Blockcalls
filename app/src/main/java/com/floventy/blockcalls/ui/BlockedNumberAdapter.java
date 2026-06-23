@@ -51,7 +51,8 @@ public class BlockedNumberAdapter extends ListAdapter<BlockedNumber, BlockedNumb
             return oldItem.getPattern().equals(newItem.getPattern())
                     && oldItem.isWildcard() == newItem.isWildcard()
                     && oldItem.getDateAdded() == newItem.getDateAdded()
-                    && oldItem.isEnabled() == newItem.isEnabled();
+                    && oldItem.isEnabled() == newItem.isEnabled()
+                    && java.util.Objects.equals(oldItem.getNote(), newItem.getNote());
         }
     };
 
@@ -114,8 +115,11 @@ public class BlockedNumberAdapter extends ListAdapter<BlockedNumber, BlockedNumb
         public void bind(BlockedNumber blockedNumber) {
             textPattern.setText(blockedNumber.getPattern());
 
-            // Lookup and display name if matches a known institution
-            String name = com.floventy.blockcalls.utils.TrustedNumbers.getTrustedNameFor(blockedNumber.getPattern());
+            // Display custom note/name if set, otherwise fallback to known institution lookup
+            String name = blockedNumber.getNote();
+            if (name == null || name.trim().isEmpty()) {
+                name = com.floventy.blockcalls.utils.TrustedNumbers.getTrustedNameFor(blockedNumber.getPattern());
+            }
             if (name != null && !name.isEmpty()) {
                 textName.setText(name);
                 textName.setVisibility(View.VISIBLE);

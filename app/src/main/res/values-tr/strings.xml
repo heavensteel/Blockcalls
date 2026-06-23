@@ -17,6 +17,7 @@
     <string name="select_country_to_block">Ülke Seçin</string>
     <string name="country_code_hint">+90</string>
     <string name="pattern_hint">0850*</string>
+    <string name="note_hint">Not / İsim (İsteğe bağlı)</string>
     <string name="pattern_help">İpucu: * herhangi bir rakamla eşleşir. Ülke kodu isteğe bağlıdır.\n• +90 | 0850* → Türkiye\'den 0850 ile başlayan numaraları engeller\n• +90 | * → TÜM Türkiye (+90) aramalarını engeller\n• +44 | * → TÜM İngiltere aramalarını engeller\n• (boş) | *0850* → 0850 içeren her numarayı engeller</string>
     <string name="cancel">İptal</string>
     <string name="save">Kaydet</string>

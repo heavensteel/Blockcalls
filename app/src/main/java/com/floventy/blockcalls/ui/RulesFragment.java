@@ -201,6 +201,7 @@ public class RulesFragment extends Fragment {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_pattern, null);
         TextInputEditText editCountryCode = dialogView.findViewById(R.id.editCountryCode);
         TextInputEditText editPattern = dialogView.findViewById(R.id.editPattern);
+        TextInputEditText editNote = dialogView.findViewById(R.id.editNote);
 
         String userCountry = CountryCodeHelper.getUserCountryCode(requireContext());
         CountryCodeHelper.CountryCode detectedCountry = CountryCodeHelper.findCountryByCode(userCountry);
@@ -223,6 +224,9 @@ public class RulesFragment extends Fragment {
             String pattern = editPattern.getText() != null
                     ? editPattern.getText().toString().trim()
                     : "";
+            String note = editNote.getText() != null
+                    ? editNote.getText().toString().trim()
+                    : "";
 
             if (pattern.isEmpty()) {
                 Toast.makeText(requireContext(), R.string.error_empty_pattern, Toast.LENGTH_SHORT).show();
@@ -239,7 +243,7 @@ public class RulesFragment extends Fragment {
                 return;
             }
 
-            viewModel.addBlockedNumber(fullPattern);
+            viewModel.addBlockedNumber(fullPattern, note);
             dialog.dismiss();
             Toast.makeText(requireContext(), R.string.pattern_added, Toast.LENGTH_SHORT).show();
         });
@@ -251,6 +255,7 @@ public class RulesFragment extends Fragment {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_pattern, null);
         TextInputEditText editCountryCode = dialogView.findViewById(R.id.editCountryCode);
         TextInputEditText editPattern = dialogView.findViewById(R.id.editPattern);
+        TextInputEditText editNote = dialogView.findViewById(R.id.editNote);
 
         String existingPattern = blockedNumber.getPattern();
         if (existingPattern.startsWith("+")) {
@@ -265,6 +270,12 @@ public class RulesFragment extends Fragment {
         } else {
             editCountryCode.setText("");
             editPattern.setText(existingPattern);
+        }
+
+        if (blockedNumber.getNote() != null) {
+            editNote.setText(blockedNumber.getNote());
+        } else {
+            editNote.setText("");
         }
 
         TextView tvTitle = dialogView.findViewById(R.id.tvDialogTitle);
@@ -285,6 +296,9 @@ public class RulesFragment extends Fragment {
             String pattern = editPattern.getText() != null
                     ? editPattern.getText().toString().trim()
                     : "";
+            String note = editNote.getText() != null
+                    ? editNote.getText().toString().trim()
+                    : "";
 
             if (pattern.isEmpty()) {
                 Toast.makeText(requireContext(), R.string.error_empty_pattern, Toast.LENGTH_SHORT).show();
@@ -302,6 +316,7 @@ public class RulesFragment extends Fragment {
             }
 
             blockedNumber.setPattern(fullPattern);
+            blockedNumber.setNote(note);
             viewModel.updateBlockedNumber(blockedNumber);
             dialog.dismiss();
             Toast.makeText(requireContext(), R.string.pattern_updated, Toast.LENGTH_SHORT).show();
@@ -341,7 +356,7 @@ public class RulesFragment extends Fragment {
                 viewModel.deleteBlockedNumber(blockedNumber);
 
                 Snackbar.make(recyclerView, R.string.pattern_deleted, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.undo, v -> viewModel.addBlockedNumber(blockedNumber.getPattern()))
+                        .setAction(R.string.undo, v -> viewModel.addBlockedNumber(blockedNumber))
                         .show();
             }
         };
