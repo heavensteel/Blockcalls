@@ -405,52 +405,42 @@ public class TrustedNumbers {
         String normalized = normalize(phoneNumber);
         if (normalized.isEmpty()) return false;
 
-        synchronized (lock) {
-            // Check dynamic prefix list
-            if (dynamicPrefixes != null) {
-                for (TrustedEntry entry : dynamicPrefixes) {
-                    if (normalized.startsWith(normalize(entry.numberOrPattern))) return true;
-                }
+        // Generate all format variants to compare against trusted lists:
+        // 1. normalized as-is          e.g. "908502220400" or "4440400"
+        // 2. with-0 stripped           e.g. "08502220400"  (mobile/0850 local format)
+        // 3. raw stripped (no 0)       e.g. "4440400"      (444-XXXX business lines)
+        java.util.List<String> variants = new java.util.ArrayList<>();
+        variants.add(normalized);
+        if (normalized.startsWith("90") && normalized.length() >= 9) {
+            String withoutCC = normalized.substring(2); // e.g. "4440400" or "8502220400"
+            variants.add("0" + withoutCC);              // e.g. "04440400" or "08502220400"
+            if (!variants.contains(withoutCC)) {
+                variants.add(withoutCC);                // e.g. "4440400" — key for 444 lines
             }
-            // Check dynamic exact list
-            if (dynamicExact != null) {
-                for (TrustedEntry entry : dynamicExact) {
-                    if (normalized.equals(normalize(entry.numberOrPattern))) return true;
-                }
-            }
         }
 
-        // Check fallback hardcoded whitelist
-        for (String prefix : TRUSTED_PREFIXES) {
-            if (normalized.startsWith(prefix)) return true;
-        }
-
-        // Check exact whitelist
-        for (String trusted : TRUSTED_EXACT) {
-            String normalizedTrusted = normalize(trusted);
-            if (normalized.equals(normalizedTrusted)) return true;
-        }
-
-        // Also try stripping the Turkish country code (+90 / 90) and re-checking
-        String stripped = stripTurkishPrefix(normalized);
-        if (!stripped.equals(normalized)) {
+        for (String v : variants) {
+            // Dynamic prefix list
             synchronized (lock) {
                 if (dynamicPrefixes != null) {
                     for (TrustedEntry entry : dynamicPrefixes) {
-                        if (stripped.startsWith(normalize(entry.numberOrPattern))) return true;
+                        if (v.startsWith(normalize(entry.numberOrPattern))) return true;
                     }
                 }
+                // Dynamic exact list
                 if (dynamicExact != null) {
                     for (TrustedEntry entry : dynamicExact) {
-                        if (stripped.equals(normalize(entry.numberOrPattern))) return true;
+                        if (v.equals(normalize(entry.numberOrPattern))) return true;
                     }
                 }
             }
+            // Hardcoded prefix list
             for (String prefix : TRUSTED_PREFIXES) {
-                if (stripped.startsWith(prefix)) return true;
+                if (v.startsWith(prefix)) return true;
             }
+            // Hardcoded exact list
             for (String trusted : TRUSTED_EXACT) {
-                if (stripped.equals(normalize(trusted))) return true;
+                if (v.equals(normalize(trusted))) return true;
             }
         }
 
@@ -630,7 +620,9 @@ public class TrustedNumbers {
      * E.g. "905321234567" → "05321234567"
      */
     private static String stripTurkishPrefix(String normalized) {
-        if (normalized.startsWith("90") && normalized.length() >= 12) {
+        // >= 9: covers 2-digit country code (90) + 7-digit Turkish business numbers (e.g. 4440400)
+        // as well as longer mobile numbers (12 digits total)
+        if (normalized.startsWith("90") && normalized.length() >= 9) {
             return "0" + normalized.substring(2);
         }
         return normalized;

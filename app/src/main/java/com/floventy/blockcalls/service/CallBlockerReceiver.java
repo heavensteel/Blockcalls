@@ -12,6 +12,7 @@ import com.floventy.blockcalls.data.BlockedNumber;
 import com.floventy.blockcalls.subscription.SubscriptionManager;
 import com.floventy.blockcalls.utils.ContactChecker;
 import com.floventy.blockcalls.utils.PatternMatcher;
+import com.floventy.blockcalls.utils.TrustedNumbers;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -64,6 +65,12 @@ public class CallBlockerReceiver extends BroadcastReceiver {
                 // call
                 if (!SubscriptionManager.isAppPremium(context.getApplicationContext())) {
                     Log.d(TAG, "No active subscription, not blocking calls");
+                    return;
+                }
+
+                // Skip blocking if the number is in the trusted whitelist
+                if (TrustedNumbers.isTrusted(incomingNumber)) {
+                    Log.d(TAG, "Trusted number, allowing call: " + incomingNumber);
                     return;
                 }
 
