@@ -10,6 +10,7 @@ import com.android.billingclient.api.AcknowledgePurchaseParams;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.PendingPurchasesParams;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.QueryPurchasesParams;
 
@@ -83,7 +84,9 @@ public class SubscriptionManager {
                         handlePurchases(purchases);
                     }
                 })
-                .enablePendingPurchases()
+                .enablePendingPurchases(PendingPurchasesParams.newBuilder()
+                        .enableOneTimeProducts()
+                        .build())
                 .build();
     }
 
